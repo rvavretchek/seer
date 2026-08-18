@@ -83,6 +83,8 @@ Sinais de sucesso do produto:
 - Qualquer interface própria (app, site, GUI) — o MVP depende inteiramente da interface do Cowork; não se constrói front-end próprio.
 - "Baixar e enxertar" skills de repositórios de terceiros de forma automatizada — descartado como abordagem.
 
+**Logo após o MVP (não no MVP em si):** uma versão mínima de um "party mode" do Seer — múltiplas personas disciplinares (Geografia, Educação) conversando entre si e com a pesquisadora de forma visível, ao contrário da composição silenciosa do orquestrador — reaproveitando o mesmo elenco de skills já construído, em modo `session` simples (sem sub-agentes, sem memória persistente, sem sistema de customização dinâmico). A versão com paridade total ao `bmad-party-mode` (múltiplos modos de execução, memória, customização dinâmica) exigiria construir do zero uma infraestrutura de configuração genérica que o Seer ainda não tem — fica deliberadamente adiada para depois da entrega do MVP.
+
 ## Visão
 
 Se o Seer der certo, ele se torna para a pesquisa acadêmica interdisciplinar o que o BMAD Method é hoje para desenvolvimento de software: não um produto fechado, mas um **padrão comunitário** — um contrato de skill estável o suficiente para que qualquer pesquisador, de qualquer disciplina, possa contribuir uma competência nova sem precisar entender o motor por trás, e qualquer superfície agêntica nova (seja da Anthropic, do Google, da OpenAI ou de quem vier depois) possa ganhar um adaptador fino sem tocar no núcleo.
@@ -168,6 +170,8 @@ Product success signals:
 - Adapters for other agentic surfaces (Manus, Gemini, ChatGPT) — the architecture leaves the door open, but none is built in the MVP.
 - Any dedicated interface (app, website, GUI) — the MVP relies entirely on Cowork's interface; no proprietary front-end is built.
 - Automated "download and graft" of skills from third-party repositories — discarded as an approach.
+
+**Right after the MVP (not in the MVP itself):** a minimal-version "party mode" for Seer — multiple discipline personas (Geography, Education) talking to each other and to the researcher visibly, the opposite of the orchestrator's silent composition — reusing the same skill roster already built, in a simple `session` mode (no sub-agents, no persistent memory, no dynamic customization system). Full parity with `bmad-party-mode` (multiple execution modes, memory, dynamic customization) would require building a generic configuration infrastructure Seer doesn't have yet from scratch — deliberately deferred until after the MVP ships.
 
 ## Vision
 

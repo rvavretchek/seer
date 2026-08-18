@@ -7,6 +7,8 @@ Todo `SKILL.md` sob `skills/` segue este contrato. É a fusão de dois padrões 
 
 Isso não é invenção — é o que já funciona nos dois projetos mais próximos do que o Seer precisa, generalizado além de "Educação" e "CLI de papers" para qualquer disciplina.
 
+**Sobre idioma:** ao contrário da documentação pública do projeto (Princípio 7 da Constituição — sempre PT-BR + EN-US), o *conteúdo de skill* — frontmatter, prompt, procedimento, exemplos — fica só em **inglês**. Decisão deliberada, não uma lacuna: o material de origem que estamos herdando por fork já é em inglês, duplicar o prompt executável em duas línguas arrisca ambiguidade dentro da própria instrução que o modelo segue, e é o idioma comum de quem mais deve contribuir skills novas por fork daqui pra frente.
+
 ## Frontmatter
 
 ```yaml
@@ -71,6 +73,8 @@ Every `SKILL.md` under `skills/` follows this contract. It is the fusion of two 
 
 - The **portable** layer comes from the native Agent Skills format (`name`, `description`, `allowed-tools`) used by `vendor/agent-papers-cli/` — understood natively by Claude Code, Codex, and compatible tools, no translation needed.
 - The **academic** layer comes from the extended schema in `vendor/education-agent-skills/` — named evidence, input/output schema, explicit composability (`chains_well_with`), known limitations.
+
+**On language:** unlike the project's public documentation (Constitution Principle 7 — always PT-BR + en-US), *skill content* — frontmatter, prompt, procedure, examples — is **English-only**. A deliberate decision, not a gap: the source material being inherited by fork is already in English, duplicating the executable prompt in two languages risks ambiguity inside the very instruction the model follows, and English is the common language of whoever is most likely to contribute new skills by fork going forward.
 
 This isn't invention — it's what already works in the two projects closest to what Seer needs, generalized beyond "Education" and "papers CLI" to any discipline.
 

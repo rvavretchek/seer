@@ -2,7 +2,7 @@
 
 Pacote disciplinar de Geografia: geografia humana, geografia física, análise espacial, cartografia, geografia econômica e política, geografia regional.
 
-**Status:** primeira skill no ar — `geographic-research/`, a skill fundacional de escopo (define escala, ramo disciplinar, família de método e fontes de dado antes de qualquer análise). Sem candidato de fork de conteúdo disponível no ecossistema atual (ver `vendor/PROVENANCE.md`) — pacote construído majoritariamente original. `GeoAgent`/`OpenGeoAgent` ([opengeos/GeoAgent](https://github.com/opengeos/GeoAgent)) é candidato a conector de **ferramenta** (QGIS, geoprocessamento), não fonte de conteúdo de skill.
+**Status:** 9 skills no ar — `geographic-research` (fundacional/escopo), `spatial-analysis`, `gis`, `cartography`, `human-geography`, `physical-geography`, `political-geography`, `economic-geography`, `regional-analysis` (síntese). Todas originais, fundamentadas em literatura real de metodologia geográfica (Clifford/Cope/Gillespie/French; Kitchin & Tate; O'Sullivan & Unwin; Kent & Vujakovic; Cox; Coe/Kelly/Yeung) — sem candidato de fork de conteúdo disponível no ecossistema atual (ver `vendor/PROVENANCE.md`). `GeoAgent`/`OpenGeoAgent` ([opengeos/GeoAgent](https://github.com/opengeos/GeoAgent)) é candidato a conector de **ferramenta** (QGIS, geoprocessamento) para a skill `gis`, não fonte de conteúdo de skill.
 
 ---
 
@@ -10,4 +10,4 @@ Pacote disciplinar de Geografia: geografia humana, geografia física, análise e
 
 Geography discipline pack: human geography, physical geography, spatial analysis, cartography, economic and political geography, regional geography.
 
-**Status:** first skill live — `geographic-research/`, the foundational scoping skill (determines scale, discipline branch, method family, and data sources before any analysis begins). No content fork candidate available in the current ecosystem (see `vendor/PROVENANCE.md`) — pack built mostly original. `GeoAgent`/`OpenGeoAgent` ([opengeos/GeoAgent](https://github.com/opengeos/GeoAgent)) is a candidate **tool** connector (QGIS, geoprocessing), not a skill-content source.
+**Status:** 9 skills live — `geographic-research` (foundational/scoping), `spatial-analysis`, `gis`, `cartography`, `human-geography`, `physical-geography`, `political-geography`, `economic-geography`, `regional-analysis` (synthesis). All original, grounded in real geography-methodology literature (Clifford/Cope/Gillespie/French; Kitchin & Tate; O'Sullivan & Unwin; Kent & Vujakovic; Cox; Coe/Kelly/Yeung) -- no content fork candidate available in the current ecosystem (see `vendor/PROVENANCE.md`). `GeoAgent`/`OpenGeoAgent` ([opengeos/GeoAgent](https://github.com/opengeos/GeoAgent)) is a candidate **tool** connector (QGIS, geoprocessing) for the `gis` skill, not a skill-content source.

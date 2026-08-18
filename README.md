@@ -32,7 +32,9 @@ Novas disciplinas e melhorias são bem-vindas assim que o contrato de skill for 
 
 ## Licença e proveniência
 
-Seer é licenciado sob [MIT](LICENSE). O padrão arquitetural de skills orquestradas é inspirado no [BMAD Method](https://github.com/bmad-code-org/BMAD-METHOD) (também MIT, copyright BMad Code, LLC) — reuso de ideias e código é permitido sob os termos do MIT, mas o Seer **não é afiliado** ao BMAD e não usa as marcas "BMad"/"BMad Method"/"BMad Core". Toda inspiração, cópia ou adaptação de qualquer projeto upstream é documentada explicitamente no artefato onde aparece — ver Princípio 5 da [Constituição](CONSTITUTION.md).
+Seer usa **licenciamento duplo**: código (motor, orquestrador, adaptadores, scripts) sob [MIT](LICENSE); conteúdo de skill (`SKILL.md` e material de referência) sob **CC BY-SA 4.0**. Ver Princípio 8 da [Constituição](CONSTITUTION.md) para o porquê.
+
+O padrão arquitetural de skills orquestradas é inspirado no [BMAD Method](https://github.com/bmad-code-org/BMAD-METHOD) (MIT, copyright BMad Code, LLC) — reuso de ideias e código é permitido sob os termos do MIT, mas o Seer **não é afiliado** ao BMAD e não usa as marcas "BMad"/"BMad Method"/"BMad Core". O pacote de Educação é trazido por fork de [`education-agent-skills`](https://github.com/GarethManning/education-agent-skills) (CC BY-SA 4.0); a base do orquestrador CORE é trazida por fork de [`agent-papers-cli`](https://github.com/collaborative-deep-research/agent-papers-cli) (Apache-2.0). Detalhes de proveniência de cada um em `vendor/`. Toda inspiração, cópia ou adaptação de qualquer projeto upstream é documentada explicitamente no artefato onde aparece — ver Princípio 5 da [Constituição](CONSTITUTION.md).
 
 ## Materiais de referência
 
@@ -74,7 +76,9 @@ New disciplines and improvements are welcome once the skill contract is publishe
 
 ## License and provenance
 
-Seer is licensed under [MIT](LICENSE). The orchestrated-skills architectural pattern is inspired by the [BMAD Method](https://github.com/bmad-code-org/BMAD-METHOD) (also MIT, copyright BMad Code, LLC) — reuse of ideas and code is permitted under MIT terms, but Seer is **not affiliated** with BMAD and does not use the "BMad"/"BMad Method"/"BMad Core" trademarks. Any inspiration, copy, or adaptation from any upstream project is documented explicitly in the artifact where it appears — see Principle 5 of the [Constitution](CONSTITUTION.md).
+Seer uses **dual licensing**: code (engine, orchestrator, adapters, scripts) under [MIT](LICENSE); skill content (`SKILL.md` and reference material) under **CC BY-SA 4.0**. See Principle 8 of the [Constitution](CONSTITUTION.md) for why.
+
+The orchestrated-skills architectural pattern is inspired by the [BMAD Method](https://github.com/bmad-code-org/BMAD-METHOD) (MIT, copyright BMad Code, LLC) — reuse of ideas and code is permitted under MIT terms, but Seer is **not affiliated** with BMAD and does not use the "BMad"/"BMad Method"/"BMad Core" trademarks. The Education pack is forked from [`education-agent-skills`](https://github.com/GarethManning/education-agent-skills) (CC BY-SA 4.0); the CORE orchestrator base is forked from [`agent-papers-cli`](https://github.com/collaborative-deep-research/agent-papers-cli) (Apache-2.0). Provenance details for each live under `vendor/`. Any inspiration, copy, or adaptation from any upstream project is documented explicitly in the artifact where it appears — see Principle 5 of the [Constitution](CONSTITUTION.md).
 
 ## Reference materials
 

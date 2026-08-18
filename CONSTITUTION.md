@@ -38,9 +38,16 @@ Skills ampliam o pesquisador; não substituem o julgamento dele. Nenhuma skill d
 
 Toda documentação pública do projeto — README, CONTRIBUTING, esta Constituição, briefs, specs — é publicada em Português do Brasil seguido da versão completa em inglês (en-US), no mesmo documento. Isso não é cortesia: é a condição para que a comunidade de pesquisa lusófona e a comunidade internacional de contribuidores técnicos consigam usar e mantar o mesmo projeto sem depender de tradução de terceiros.
 
-## 8. MIT, Sem Meias-Palavras
+## 8. Licenciamento Duplo, Sem Meias-Palavras
 
-O Seer é licenciado sob MIT. Toda skill contribuída ao núcleo precisa ser compatível com MIT ou explicitamente documentada quando isso não for possível (por exemplo, uma skill que depende de dado ou biblioteca sob outra licença deve declarar isso na própria skill).
+O Seer usa licenciamento duplo, seguindo o padrão que o próprio ecossistema de skills abertas já adotou:
+
+- **Código** (motor, orquestrador, scripts, adaptadores) — **MIT**.
+- **Conteúdo de skill** (todo `SKILL.md` e material de referência associado) — **CC BY-SA 4.0** (Atribuição-CompartilhaIgual).
+
+A razão é prática, não ideológica: as bibliotecas de conteúdo de skill mais maduras e mais próximas do que o Seer precisa — incluindo pacotes disciplinares inteiros trazidos por fork — já são publicadas sob CC BY-SA 4.0. Herdar esse conteúdo sob MIT não é juridicamente possível (a cláusula *share-alike* exige que derivados carreguem a mesma licença); herdar sob CC BY-SA é natural e correto.
+
+Toda skill contribuída ao núcleo precisa ser compatível com esse esquema — CC BY-SA 4.0 para o conteúdo, e MIT (ou compatível) para qualquer código/script que a acompanhe — ou declarar explicitamente uma exceção documentada (por exemplo, uma skill que depende de um dataset sob outra licença deve declarar isso nela mesma). Conteúdo sob licença que proíbe uso comercial (ex.: variantes *NonCommercial*) **nunca** é incorporado por fork ou cópia — pode, no máximo, inspirar uma reimplementação original, nunca reutilizar o texto ou o código.
 
 ---
 
@@ -88,9 +95,16 @@ Skills amplify the researcher; they do not replace their judgment. No core skill
 
 All public project documentation — README, CONTRIBUTING, this Constitution, briefs, specs — is published in Brazilian Portuguese followed by the complete English (en-US) version, in the same document. This is not courtesy: it is the condition for both the Portuguese-speaking research community and the international community of technical contributors to use and maintain the same project without depending on third-party translation.
 
-## 8. MIT, No Half-Measures
+## 8. Dual Licensing, No Half-Measures
 
-Seer is MIT-licensed. Every skill contributed to the core must be MIT-compatible or explicitly documented when that is not possible (for example, a skill that depends on data or a library under a different license must declare that within the skill itself).
+Seer uses dual licensing, following the pattern the open-skills ecosystem itself has already settled on:
+
+- **Code** (engine, orchestrator, scripts, adapters) — **MIT**.
+- **Skill content** (every `SKILL.md` and its associated reference material) — **CC BY-SA 4.0** (Attribution-ShareAlike).
+
+The reason is practical, not ideological: the most mature skill-content libraries closest to what Seer needs — including entire discipline packs brought in by fork — are already published under CC BY-SA 4.0. Inheriting that content as MIT isn't legally possible (the share-alike clause requires derivatives to carry the same license); inheriting it as CC BY-SA is natural and correct.
+
+Every skill contributed to the core must be compatible with this scheme — CC BY-SA 4.0 for content, and MIT (or compatible) for any accompanying code/scripts — or explicitly declare a documented exception (for example, a skill that depends on a dataset under a different license must declare that within the skill itself). Content under a license that forbids commercial use (e.g. *NonCommercial* variants) is **never** incorporated by fork or copy — at most, it may inspire an original reimplementation, never reuse of the text or code.
 
 ---
 

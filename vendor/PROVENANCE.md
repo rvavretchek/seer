@@ -4,8 +4,8 @@ Registro obrigatório por Princípio 5 e 8 da [Constituição](../CONSTITUTION.m
 
 | Pasta | Fonte | Licença original | Commit/ref importado | Data | Papel no Seer |
 |---|---|---|---|---|---|
-| `education-agent-skills/` | [GarethManning/education-agent-skills](https://github.com/GarethManning/education-agent-skills) | CC BY-SA 4.0 | `main` @ import | 2026-08-18 | Base do pacote disciplinar `skills/education/` — 165 skills, 20 domínios, evidence-based. |
-| `agent-papers-cli/` | [collaborative-deep-research/agent-papers-cli](https://github.com/collaborative-deep-research/agent-papers-cli) | Apache-2.0 | `main` @ import | 2026-08-18 | Base estrutural de `skills/core/` e `skills/orchestrator/` — padrão coordinator → deep-research/literature-review/fact-check. |
+| `education-agent-skills/` | [GarethManning/education-agent-skills](https://github.com/GarethManning/education-agent-skills) | CC BY-SA 4.0 | `4be2795` (main) | 2026-08-18 | Base do pacote disciplinar `skills/education/` — 165 skills, 20 domínios, evidence-based. |
+| `agent-papers-cli/` | [collaborative-deep-research/agent-papers-cli](https://github.com/collaborative-deep-research/agent-papers-cli) | Apache-2.0 | `23a1941` (main) | 2026-08-18 | Base estrutural de `skills/core/` e `skills/orchestrator/` — padrão coordinator → deep-research/literature-review/fact-check. |
 
 ## Atualizando um fork
 
@@ -27,8 +27,8 @@ Required record per Principles 5 and 8 of the [Constitution](../CONSTITUTION.md)
 
 | Folder | Source | Original license | Imported commit/ref | Date | Role in Seer |
 |---|---|---|---|---|---|
-| `education-agent-skills/` | [GarethManning/education-agent-skills](https://github.com/GarethManning/education-agent-skills) | CC BY-SA 4.0 | `main` @ import | 2026-08-18 | Base for the `skills/education/` discipline pack — 165 skills, 20 domains, evidence-based. |
-| `agent-papers-cli/` | [collaborative-deep-research/agent-papers-cli](https://github.com/collaborative-deep-research/agent-papers-cli) | Apache-2.0 | `main` @ import | 2026-08-18 | Structural base for `skills/core/` and `skills/orchestrator/` — coordinator → deep-research/literature-review/fact-check pattern. |
+| `education-agent-skills/` | [GarethManning/education-agent-skills](https://github.com/GarethManning/education-agent-skills) | CC BY-SA 4.0 | `4be2795` (main) | 2026-08-18 | Base for the `skills/education/` discipline pack — 165 skills, 20 domains, evidence-based. |
+| `agent-papers-cli/` | [collaborative-deep-research/agent-papers-cli](https://github.com/collaborative-deep-research/agent-papers-cli) | Apache-2.0 | `23a1941` (main) | 2026-08-18 | Structural base for `skills/core/` and `skills/orchestrator/` — coordinator → deep-research/literature-review/fact-check pattern. |
 
 ## Updating a fork
 

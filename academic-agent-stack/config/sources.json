@@ -1,0 +1,54 @@
+{
+  "version": 1,
+  "sources": [
+    {
+      "id": "kdense-scientific",
+      "name": "K-Dense Scientific Agent Skills",
+      "repo": "https://github.com/K-Dense-AI/scientific-agent-skills.git",
+      "enabled": true,
+      "large": false
+    },
+    {
+      "id": "education-agent-skills",
+      "name": "Education Agent Skills",
+      "repo": "https://github.com/GarethManning/education-agent-skills.git",
+      "enabled": true,
+      "large": false
+    },
+    {
+      "id": "academic-research-agent-skill",
+      "name": "Academic Research Agent Skill",
+      "repo": "https://github.com/ngtiendong/Academic-Research-Agent-Skill.git",
+      "enabled": true,
+      "large": false
+    },
+    {
+      "id": "ai-skill-scholar",
+      "name": "AI Skill Scholar",
+      "repo": "https://github.com/dsebastien/ai-skill-scholar.git",
+      "enabled": true,
+      "large": false
+    },
+    {
+      "id": "zotero-use",
+      "name": "Zotero Agent Skill",
+      "repo": "https://github.com/drguptavivek/zotero-use.git",
+      "enabled": true,
+      "large": false
+    },
+    {
+      "id": "empirical-research-skills",
+      "name": "Agent Skills for Empirical Research",
+      "repo": "https://github.com/brycewang-stanford/Auto-Empirical-Research-Skills.git",
+      "enabled": true,
+      "large": true
+    },
+    {
+      "id": "gisclaw",
+      "name": "GISclaw",
+      "repo": "https://github.com/geumjin99/GISclaw.git",
+      "enabled": false,
+      "large": false
+    }
+  ]
+}

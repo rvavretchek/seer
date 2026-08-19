@@ -36,6 +36,20 @@ Todos os comandos acima já rodaram de verdade nesta sessão — não é hipoté
 
 Ver [`CONNECTORS.md`](CONNECTORS.md) — apenas conectores reais e verificados entram em `.mcp.json` (mesmo rigor de `vendor/PROVENANCE.md`). Hoje: OpenAlex. Candidatos documentados: IBGE/SIDRA, Zotero, SciELO, INPE.
 
+### Configurar a chave da OpenAlex (Windows)
+
+Desde 13/fev/2026 a OpenAlex exige chave — sem ela, o limite é 100 créditos/dia (estoura em poucas buscas). Ver a seção "Causa raiz" em `CONNECTORS.md`.
+
+1. Crie uma conta grátis em [openalex.org](https://openalex.org) e pegue sua chave em `openalex.org/settings/api`.
+2. Defina a variável de ambiente **de forma permanente** (não basta `$env:` numa janela só — o Cowork é um app separado, não herda de um terminal aberto). No PowerShell:
+   ```powershell
+   setx OPENALEX_API_KEY "sua-chave-aqui"
+   ```
+3. **Feche e reabra o Claude Desktop/Cowork** — apps já abertos não pegam variável de ambiente nova até reiniciar.
+4. Reteste o Teste 3 do roteiro (`tests/manual/cowork-rc1-test-script.md`) — se a busca no OpenAlex retornar sem erro 429, a chave está funcionando.
+
+`adapters/cowork/.mcp.json` já referencia `${OPENALEX_API_KEY}` — a chave nunca fica no repositório, só na sua máquina.
+
 ## O que falta pra publicação real
 
 - Testar dentro do app Cowork de verdade (`Add marketplace` com `rvavretchek/seer`, ou upload do plugin como arquivo) — o que validamos até aqui foi via `claude` CLI, que usa o mesmo mecanismo, mas não é o app Cowork em si.
@@ -81,6 +95,20 @@ Every command above actually ran in this session -- not hypothetical.
 ## Connectors
 
 See [`CONNECTORS.md`](CONNECTORS.md) -- only real, verified connectors go into `.mcp.json` (the same rigor as `vendor/PROVENANCE.md`). Today: OpenAlex. Documented candidates: IBGE/SIDRA, Zotero, SciELO, INPE.
+
+### Configuring the OpenAlex key (Windows)
+
+Since 2026-02-13 OpenAlex requires a key -- without one, the limit is 100 credits/day (exhausted within a few searches). See the "Root cause" section in `CONNECTORS.md`.
+
+1. Create a free account at [openalex.org](https://openalex.org) and get your key at `openalex.org/settings/api`.
+2. Set the environment variable **permanently** (a one-off `$env:` in a single window isn't enough -- Cowork is a separate app, it doesn't inherit from an open terminal). In PowerShell:
+   ```powershell
+   setx OPENALEX_API_KEY "your-key-here"
+   ```
+3. **Close and reopen Claude Desktop/Cowork** -- apps already open don't pick up a new environment variable until restarted.
+4. Re-run Test 3 from the script (`tests/manual/cowork-rc1-test-script.md`) -- if the OpenAlex search comes back without a 429, the key is working.
+
+`adapters/cowork/.mcp.json` already references `${OPENALEX_API_KEY}` -- the key never lives in the repository, only on your machine.
 
 ## What's left before real publication
 

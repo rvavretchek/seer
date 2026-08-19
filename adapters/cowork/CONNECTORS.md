@@ -6,7 +6,18 @@ Segue o padrão do plugin oficial `bio-research` em [`anthropics/knowledge-work-
 
 | Conector | Servidor | Licença | Chave de API | Status |
 |---|---|---|---|---|
-| OpenAlex (busca acadêmica geral) | [`cyanheads/openalex-mcp-server`](https://github.com/cyanheads/openalex-mcp-server) | Apache-2.0 | Opcional (funciona anônimo, chave grátis só melhora limite de taxa) | ⚠️ Em `.mcp.json`, mas com achado real do teste da v1.0.0-rc.1: **5 tentativas seguidas retornaram HTTP 429** (limite de taxa) no acesso anônimo. O Claude contornou de forma honesta (buscou os mesmos dados via web + Crossref, sem tentar bypass via curl/bash), então o teste de "conector funcionando" falhou mesmo com o resultado final correto. Ação recomendada: obter uma chave grátis da OpenAlex e configurar `OPENALEX_API_KEY` localmente (não commitada — vai em `.claude/settings.local.json` ou equivalente, nunca no `.mcp.json` do repositório) até confirmarmos se o limite anônimo é viável pra uso real. |
+| OpenAlex (busca acadêmica geral) | [`cyanheads/openalex-mcp-server`](https://github.com/cyanheads/openalex-mcp-server) | Apache-2.0 | **Obrigatória desde 13/fev/2026** (política da própria OpenAlex mudou — ver abaixo). Grátis. | ⚠️ Causa raiz identificada, correção aplicada em `.mcp.json`, pendente de teste com chave real. |
+
+### Causa raiz do 429 observado no teste da v1.0.0-rc.1
+
+A OpenAlex **descontinuou o "polite pool"** (o mecanismo antigo, baseado só em enviar um e-mail via `mailto=`, sem cadastro) em 13 de fevereiro de 2026. A partir dessa data:
+
+- **Sem chave**: 100 créditos/dia — na prática, inviável pra uso real (é o que bateu no nosso teste: 5 tentativas já estouraram).
+- **Com chave grátis** (criando conta em `openalex.org` e pegando a chave em `openalex.org/settings/api`): 100.000 créditos/dia.
+
+Isso não é uma otimização opcional como a documentação do `openalex-mcp-server` ainda sugere (provavelmente escrita antes da mudança) — **é obrigatório pra qualquer uso real hoje**.
+
+`adapters/cowork/.mcp.json` já referencia `"OPENALEX_API_KEY": "${OPENALEX_API_KEY}"` — expansão de variável de ambiente, nunca a chave em texto puro no repositório. Falta: cada pessoa que instalar o plugin configurar essa variável de ambiente no próprio sistema, com sua própria chave (ver `README.md` deste diretório para o passo a passo no Windows).
 
 ## Candidatos (pesquisados, ainda não integrados)
 
@@ -33,7 +44,18 @@ Follows the pattern set by the official `bio-research` plugin in [`anthropics/kn
 
 | Connector | Server | License | API key | Status |
 |---|---|---|---|---|
-| OpenAlex (general academic search) | [`cyanheads/openalex-mcp-server`](https://github.com/cyanheads/openalex-mcp-server) | Apache-2.0 | Optional (works anonymously; a free key only improves rate limits) | ⚠️ In `.mcp.json`, but with a real finding from the v1.0.0-rc.1 test: **5 consecutive attempts returned HTTP 429** (rate limit) on anonymous access. Claude handled it honestly (found the same data via web search + Crossref, without trying to bypass via curl/bash), so the deliverable was still correct but the "connector actually works" test failed. Recommended action: get a free OpenAlex API key and set `OPENALEX_API_KEY` locally (not committed -- goes in `.claude/settings.local.json` or equivalent, never in the repo's `.mcp.json`) until we confirm whether the anonymous limit is viable for real use. |
+| OpenAlex (general academic search) | [`cyanheads/openalex-mcp-server`](https://github.com/cyanheads/openalex-mcp-server) | Apache-2.0 | **Required as of 2026-02-13** (OpenAlex's own policy changed -- see below). Free. | ⚠️ Root cause identified, fix applied in `.mcp.json`, pending a test with a real key. |
+
+### Root cause of the 429 observed in the v1.0.0-rc.1 test
+
+OpenAlex **discontinued the "polite pool"** (the old mechanism -- just sending an email via `mailto=`, no account needed) on February 13, 2026. Since then:
+
+- **No key**: 100 credits/day -- in practice, unviable for real use (exactly what our test hit: 5 attempts already exhausted it).
+- **With a free key** (create an account at `openalex.org`, get the key at `openalex.org/settings/api`): 100,000 credits/day.
+
+This isn't an optional optimization the way `openalex-mcp-server`'s own docs still suggest (likely written before the policy changed) -- **it's required for any real use today**.
+
+`adapters/cowork/.mcp.json` already references `"OPENALEX_API_KEY": "${OPENALEX_API_KEY}"` -- environment-variable expansion, never the raw key in the repository. What's left: anyone installing the plugin needs to set that environment variable on their own system, with their own key (see this directory's `README.md` for the Windows walkthrough).
 
 ## Candidates (researched, not yet integrated)
 

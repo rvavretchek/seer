@@ -1,0 +1,19 @@
+{
+  "name": "seer",
+  "displayName": "Seer",
+  "description": "Composable academic research skills -- literature review, source verification, and discipline packs (Geography, Education) orchestrated for interdisciplinary research questions. Portable core, dual-licensed (MIT code / CC BY-SA 4.0 content).",
+  "version": "0.1.0",
+  "author": {
+    "name": "Seer contributors"
+  },
+  "homepage": "https://github.com/rvavretchek/seer",
+  "repository": "https://github.com/rvavretchek/seer",
+  "license": "MIT (code) / CC BY-SA 4.0 (skill content) -- see LICENSE and CONSTITUTION.md",
+  "keywords": [
+    "academic-research",
+    "geography",
+    "education",
+    "orchestrator",
+    "literature-review"
+  ]
+}

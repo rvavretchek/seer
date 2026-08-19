@@ -4,7 +4,7 @@
 
 Seer é uma biblioteca open source de *agent skills* para trabalho acadêmico interdisciplinar. É o equivalente, para pesquisa, do que ecossistemas de skills agênticas já entregam para desenvolvimento de software: um conjunto de competências especializadas e componíveis, mais um orquestrador capaz de decidir sozinho quais delas uma pergunta de pesquisa real exige.
 
-> Status: **estágio de planejamento**. O [product brief](_bmad-output/planning-artifacts/briefs/brief-Seer-2026-08-18/brief.md) e a [Constituição](CONSTITUTION.md) do projeto estão fechados; a implementação do núcleo de skills ainda não começou. Este README será atualizado conforme o código nascer.
+> Status: **MVP em construção, núcleo funcional**. [Product brief](_bmad-output/planning-artifacts/briefs/brief-Seer-2026-08-18/brief.md) e [Constituição](CONSTITUTION.md) fechados. `skills/` completo (CORE 6/6, Geografia 9/9, Educação 7 + 160 no fork sob demanda), [orquestrador](skills/orchestrator/SKILL.md) testado de ponta a ponta, [adaptador Cowork](adapters/cowork/README.md) funcional e validado (`claude plugin validate` passa limpo). Falta: testar dentro do Cowork de verdade, mais conectores reais.
 
 ## O problema
 
@@ -48,7 +48,7 @@ A pasta [`academic-agent-stack/`](academic-agent-stack/) e os arquivos `GPT_acad
 
 Seer is an open-source library of agent skills for interdisciplinary academic work. It's the research equivalent of what agentic skill ecosystems already deliver for software development: a set of specialized, composable competencies, plus an orchestrator able to decide on its own which ones a real research question requires.
 
-> Status: **planning stage**. The project's [product brief](_bmad-output/planning-artifacts/briefs/brief-Seer-2026-08-18/brief.md) and [Constitution](CONSTITUTION.md) are settled; implementation of the skill core has not started yet. This README will be updated as code lands.
+> Status: **MVP under construction, core functional**. [Product brief](_bmad-output/planning-artifacts/briefs/brief-Seer-2026-08-18/brief.md) and [Constitution](CONSTITUTION.md) settled. `skills/` complete (CORE 6/6, Geography 9/9, Education 7 + 160 more available on demand from the fork), the [orchestrator](skills/orchestrator/SKILL.md) tested end to end, the [Cowork adapter](adapters/cowork/README.md) functional and validated (`claude plugin validate` passes clean). Left: testing inside the real Cowork app, more real connectors.
 
 ## The problem
 

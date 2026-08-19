@@ -2,4 +2,3 @@
 .bmad-loop/cache/
 .bmad-loop/policy.toml
 _bmad/render/
-adapters/cowork/dist/

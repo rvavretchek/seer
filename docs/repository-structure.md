@@ -4,6 +4,10 @@ Como o Seer está organizado e por quê. Reflete diretamente os Princípios 1, 2
 
 ```
 Seer/
+├── .claude-plugin/marketplace.json  # Permite "Add marketplace" direto do GitHub
+│                     # (Cowork ou Claude Code) apontando pra rvavretchek/seer.
+│                     # Ver adapters/cowork/README.md.
+│
 ├── vendor/           # Forks reais de projetos upstream, com histórico git preservado.
 │                     # Nunca editado diretamente — só atualizado via `git subtree pull`.
 │                     # Cada subpasta tem proveniência (fonte, licença, versão) em vendor/PROVENANCE.md.
@@ -53,6 +57,10 @@ How Seer is organized and why. Directly reflects Principles 1, 2, and 5 of the [
 
 ```
 Seer/
+├── .claude-plugin/marketplace.json  # Enables "Add marketplace" directly from
+│                     # GitHub (Cowork or Claude Code) pointing at
+│                     # rvavretchek/seer. See adapters/cowork/README.md.
+│
 ├── vendor/           # Real forks of upstream projects, with git history preserved.
 │                     # Never edited directly — only updated via `git subtree pull`.
 │                     # Each subfolder has provenance (source, license, version) in vendor/PROVENANCE.md.

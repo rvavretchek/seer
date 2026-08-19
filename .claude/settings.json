@@ -40,5 +40,11 @@
         ]
       }
     ]
+  },
+  "skillOverrides": {
+    "deep-research": "off",
+    "fact-check": "off",
+    "literature-review": "off",
+    "research-coordinator": "off"
   }
 }

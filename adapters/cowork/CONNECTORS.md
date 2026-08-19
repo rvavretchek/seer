@@ -6,7 +6,7 @@ Segue o padrão do plugin oficial `bio-research` em [`anthropics/knowledge-work-
 
 | Conector | Servidor | Licença | Chave de API | Status |
 |---|---|---|---|---|
-| OpenAlex (busca acadêmica geral) | [`cyanheads/openalex-mcp-server`](https://github.com/cyanheads/openalex-mcp-server) | Apache-2.0 | Opcional (funciona anônimo, chave grátis só melhora limite de taxa) | ✅ Em `.mcp.json` |
+| OpenAlex (busca acadêmica geral) | [`cyanheads/openalex-mcp-server`](https://github.com/cyanheads/openalex-mcp-server) | Apache-2.0 | Opcional (funciona anônimo, chave grátis só melhora limite de taxa) | ⚠️ Em `.mcp.json`, mas com achado real do teste da v1.0.0-rc.1: **5 tentativas seguidas retornaram HTTP 429** (limite de taxa) no acesso anônimo. O Claude contornou de forma honesta (buscou os mesmos dados via web + Crossref, sem tentar bypass via curl/bash), então o teste de "conector funcionando" falhou mesmo com o resultado final correto. Ação recomendada: obter uma chave grátis da OpenAlex e configurar `OPENALEX_API_KEY` localmente (não commitada — vai em `.claude/settings.local.json` ou equivalente, nunca no `.mcp.json` do repositório) até confirmarmos se o limite anônimo é viável pra uso real. |
 
 ## Candidatos (pesquisados, ainda não integrados)
 
@@ -33,7 +33,7 @@ Follows the pattern set by the official `bio-research` plugin in [`anthropics/kn
 
 | Connector | Server | License | API key | Status |
 |---|---|---|---|---|
-| OpenAlex (general academic search) | [`cyanheads/openalex-mcp-server`](https://github.com/cyanheads/openalex-mcp-server) | Apache-2.0 | Optional (works anonymously; a free key only improves rate limits) | ✅ In `.mcp.json` |
+| OpenAlex (general academic search) | [`cyanheads/openalex-mcp-server`](https://github.com/cyanheads/openalex-mcp-server) | Apache-2.0 | Optional (works anonymously; a free key only improves rate limits) | ⚠️ In `.mcp.json`, but with a real finding from the v1.0.0-rc.1 test: **5 consecutive attempts returned HTTP 429** (rate limit) on anonymous access. Claude handled it honestly (found the same data via web search + Crossref, without trying to bypass via curl/bash), so the deliverable was still correct but the "connector actually works" test failed. Recommended action: get a free OpenAlex API key and set `OPENALEX_API_KEY` locally (not committed -- goes in `.claude/settings.local.json` or equivalent, never in the repo's `.mcp.json`) until we confirm whether the anonymous limit is viable for real use. |
 
 ## Candidates (researched, not yet integrated)
 

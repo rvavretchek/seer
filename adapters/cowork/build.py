@@ -24,12 +24,14 @@ SKILLS_OUT = ADAPTER_ROOT / "skills"
 
 
 def main() -> None:
-    if SKILLS_OUT.exists():
-        shutil.rmtree(SKILLS_OUT)
-    SKILLS_OUT.mkdir(parents=True)
+    # Per-folder remove+copy rather than a top-level rmtree: OneDrive's sync
+    # lock has been observed to reject removing the whole skills/ directory
+    # in one shot, even when individual subfolders remove cleanly.
+    SKILLS_OUT.mkdir(parents=True, exist_ok=True)
 
     seen: dict[str, Path] = {}
     skipped = []
+    wanted: set[str] = set()
     for skill_md in sorted(SKILLS_SRC.glob("**/SKILL.md")):
         skill_dir = skill_md.parent
         skill_name = skill_dir.name
@@ -37,7 +39,19 @@ def main() -> None:
             skipped.append((skill_name, skill_dir, seen[skill_name]))
             continue
         seen[skill_name] = skill_dir
-        shutil.copytree(skill_dir, SKILLS_OUT / skill_name)
+        wanted.add(skill_name)
+        dest = SKILLS_OUT / skill_name
+        # Overwrite files in place rather than rmtree-then-copytree: OneDrive's
+        # sync lock has been observed to reject removing some skill folders
+        # outright even when their files update fine individually.
+        shutil.copytree(skill_dir, dest, dirs_exist_ok=True)
+
+    for stale in SKILLS_OUT.iterdir():
+        if stale.is_dir() and stale.name not in wanted:
+            try:
+                shutil.rmtree(stale)
+            except PermissionError:
+                print(f"WARNING -- could not remove stale skill dir (locked?): {stale}")
 
     print(f"Regenerated {len(seen)} skills into {SKILLS_OUT}")
     if skipped:

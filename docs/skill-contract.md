@@ -58,6 +58,15 @@ provenance: "original | forked:<repo>@<commit>, adapted"
 - `provenance: forked:...` exige uma linha correspondente em `vendor/PROVENANCE.md` apontando para o commit de origem.
 - Skill sem `Limitações Conhecidas` não é aceita — ver Constituição, Princípio 6.
 
+## Contexto de Projeto (opcional)
+
+Uma skill pode consultar contexto declarado a nível de projeto de pesquisa, quando existir. Isto não é memória — é leitura de um documento que o próprio projeto já mantém, editável pelo pesquisador ou pelas skills que o atualizam quando algo vira decisão.
+
+- **Onde procurar:** arquivo `metodologia.md` (ou equivalente) na raiz da pasta do projeto de pesquisa corrente — caminho configurável, nunca hardcoded a um nome único.
+- **O que ler:** qual metodologia foi adotada para este projeto (ex.: estudo de caso, análise de amostras, abordagem empírica) e sua bibliografia própria — não instruções novas de procedimento, só *qual* das opções já fundamentadas na skill se aplica aqui.
+- **Se não existir:** a skill segue seu comportamento padrão, sem perguntar nem exigir. Ausência de contexto de projeto nunca bloqueia a skill.
+- **Se existir e conflitar** com o que a skill normalmente recomendaria: a skill sinaliza a tensão ao pesquisador em vez de decidir silenciosamente (Constituição, Princípio 6) — mesma regra que o orquestrador já aplica entre skills.
+
 ## Exemplos de referência
 
 Duas skills já aplicam este contrato como prova de conceito:
@@ -126,6 +135,15 @@ provenance: "original | forked:<repo>@<commit>, adapted"
 - `chains_well_with` is not decorative — it's what the orchestrator uses to build plans. A skill with nothing listed here is, by default, suspect of being too isolated to be useful.
 - `provenance: forked:...` requires a matching row in `vendor/PROVENANCE.md` pointing to the source commit.
 - A skill without **Known Limitations** is not accepted — see Constitution, Principle 6.
+
+## Project Context (optional)
+
+A skill may consult context declared at the research-project level, when it exists. This is not memory — it's reading a document the project itself already maintains, editable by the researcher or by whichever skills update it once something becomes a decision.
+
+- **Where to look:** a `metodologia.md` file (or equivalent) at the root of the current research project's folder — configurable path, never hardcoded to one fixed name.
+- **What to read:** which methodology was adopted for this project (e.g. case study, sample analysis, empirical approach) and its own bibliography — not new procedural instructions, just *which* of the skill's already-grounded options applies here.
+- **If it doesn't exist:** the skill falls back to its default behavior, without asking or requiring it. Absence of project context never blocks a skill.
+- **If it exists and conflicts** with what the skill would normally recommend: the skill flags the tension to the researcher instead of silently deciding (Constitution, Principle 6) — the same rule the orchestrator already applies across skills.
 
 ## Reference examples
 

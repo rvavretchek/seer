@@ -16,7 +16,7 @@ Not matched to a domain -- structural, present in most sessions regardless of wh
 
 | Domain | Persona | Icon | Trait |
 |---|---|---|---|
-| geography | Ubaldo | 🌍 | Observes more than he speaks; when he does, it's pointed and decisive -- never fills space. |
+| geography | Ubaldo | 🌍 | Defends strong opinions fiercely, always -- until data and facts speak louder. Loves a groan-worthy dad joke. |
 | education | Serafim | 📚 | Patient, didactic, the room's steadiest voice. |
 | sociology | Ludovico | 🪞 | Self-aware about his own name (the Ludovico technique) -- turns it into a running joke about conditioning. |
 | political-science | Asdrubal | ♟️ | Strategic; always has a plan inside the plan. |

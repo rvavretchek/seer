@@ -1,5 +1,23 @@
 # Changelog
 
+## [1.1.0] — 2026-08-21
+
+Fecha o roadmap pós-MVP planejado desde a v1.0.0-rc.1: as duas disciplinas do Tabula Rasa que exigiam pesquisa real, sem fork equivalente, agora estão prontas. O elenco de personas do Tabula Rasa está completo conforme desenhado.
+
+### Adicionado
+
+- **`project-management/academic-project-planning`** — cronograma, marcos e registro de risco para o projeto de pesquisa em si, mais rastreamento de prazos do pipeline de publicação (janela de submissão, ciclo de revisão). Nunca opina sobre metodologia de pesquisa (isso é das skills de disciplina) nem sobre o conteúdo de uma revisão por pares (isso é do `core/peer-review`). Fundamentado no PMBoK 8ª edição (PMI, lançada em novembro de 2025).
+- **`research-finance/grant-budget-and-accountability`** — formação de orçamento, acompanhamento financeiro durante a execução e prestação de contas, cobrindo os padrões gerais de CAPES, CNPq e FAPESP. Fundamentado em fontes primárias reais (página oficial do CNPq, normas vigentes da FAPESP, Portaria CAPES nº 37/2026), com sinalização explícita do que não pôde ser confirmado em vez de inventado — variação por edital tratada como limitação estrutural, não nota de rodapé.
+- **Elenco do Tabula Rasa completo**: Alberico agora também é a voz de `project-management` (mesmo nome e característica de sempre — coordenador de projeto é literalmente gestão de projeto aplicada à sala), continuando presente na maioria das sessões (`Always Present`). Quitéria assume `research-finance`. Ubaldo permanece em Geografia, papel que já ocupava.
+- **32 skills** no plugin buildado.
+
+### O que fica para depois
+
+- Conectores candidatos ainda não pesquisados: IBGE/SIDRA, Zotero, SciELO, INPE.
+- Relação entre `ata-do-projeto.md` (Tabula Rasa) e `metodologia.md` (Contexto de Projeto, `docs/skill-contract.md`) permanece deliberadamente não resolvida.
+- Tabula Rasa segue em modo sessão apenas — sem despacho paralelo real entre personas.
+- Bug de plataforma no Cowork (ver v1.0.0) continua sem correção conhecida.
+
 ## [1.0.0] — 2026-08-21
 
 Primeira versão final do Seer, cobrindo o MVP original (v1.0.0-rc.1) mais tudo que o roadmap já previa como "logo em seguida": a versão mínima do Tabula Rasa (party mode do próprio Seer) com memória entre sessões, seis skills novas de disciplina e a normalização ABNT.
@@ -61,6 +79,24 @@ Roteiro completo (`tests/manual/cowork-rc1-test-script.md`) rodado no Cowork rea
 ---
 
 # Changelog (English / en-US)
+
+## [1.1.0] — 2026-08-21
+
+Closes the post-MVP roadmap planned since v1.0.0-rc.1: the two Tabula Rasa disciplines that needed real research, with no fork equivalent, are now ready. Tabula Rasa's persona cast is complete as designed.
+
+### Added
+
+- **`project-management/academic-project-planning`** -- schedule, milestones, and risk register for the research project itself, plus publication-pipeline deadline tracking (submission windows, review cycles). Never opines on research methodology (that's the discipline skills' job) or peer-review substance (that's `core/peer-review`'s). Grounded in PMBoK 8th Edition (PMI, released November 2025).
+- **`research-finance/grant-budget-and-accountability`** -- budget formation, execution tracking, and prestação de contas, covering the general patterns shared by CAPES, CNPq, and FAPESP. Grounded in real primary sources (CNPq's official page, FAPESP's current norms, CAPES's Portaria nº 37/2026), with explicit flags for what couldn't be confirmed rather than fabricated -- edital-specific variation treated as a structural limitation, not a footnote.
+- **Tabula Rasa's cast is now complete**: Alberico also voices `project-management` (same name and trait as always -- a project coordinator is literally project management applied to the room itself), while remaining present in most sessions (`Always Present`). Quitéria takes `research-finance`. Ubaldo stays on Geography, the role he already held.
+- **32 skills** in the built plugin.
+
+### What's left for later
+
+- Candidate connectors not yet researched: IBGE/SIDRA, Zotero, SciELO, INPE.
+- The relationship between `ata-do-projeto.md` (Tabula Rasa) and `metodologia.md` (Project Context, `docs/skill-contract.md`) remains deliberately unresolved.
+- Tabula Rasa is still session-mode only -- no real parallel dispatch between personas.
+- The Cowork platform bug (see v1.0.0) still has no known fix.
 
 ## [1.0.0] — 2026-08-21
 

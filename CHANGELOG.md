@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.3.1] — 2026-08-21
+
+### Adicionado
+
+- **`dispatch_mode: "auto"`** no Tabula Rasa — não é mecanismo novo, é regra de decisão por persona entre `session` e `subagent` (os dois já existentes), baseada em se a posição daquela persona tem chance real de divergir de outra no pedido específico. Padrão continua `"session"`.
+
+### Pesquisado
+
+- **Viabilidade de um modo "agent-team" (personas persistentes se mensageando direto) no Cowork**: investigado a fundo, não construível hoje. O mecanismo real (`SendMessage`/agent-teams do Claude Code) é experimental, exige variável de ambiente e sessão interativa de terminal — nenhuma dessas condições existe no modelo GUI-only do Cowork nem é solicitável pelo `allowed-tools` de uma skill de plugin. Achado documentado com fontes reais em `docs/research-agent-team-feasibility.md`, referenciado nas Limitações Conhecidas do `tabula-rasa/SKILL.md`.
+
 ## [1.3.0] — 2026-08-21
 
 Tabula Rasa ganha despacho paralelo real entre personas.
@@ -112,6 +122,16 @@ Roteiro completo (`tests/manual/cowork-rc1-test-script.md`) rodado no Cowork rea
 ---
 
 # Changelog (English / en-US)
+
+## [1.3.1] — 2026-08-21
+
+### Added
+
+- **`dispatch_mode: "auto"`** in Tabula Rasa -- not a new mechanism, a per-persona decision rule between `session` and `subagent` (both already existing), based on whether that persona's position is likely to genuinely diverge from another's on the specific request. Default stays `"session"`.
+
+### Researched
+
+- **Feasibility of an "agent-team" mode (standing personas messaging each other directly) in Cowork**: investigated in depth, not buildable today. The real mechanism (Claude Code's `SendMessage`/agent-teams feature) is experimental, requires an environment variable, and requires an interactive terminal session -- none of which exist in Cowork's GUI-only model or can be requested via a plugin skill's `allowed-tools`. Finding documented with real sources in `docs/research-agent-team-feasibility.md`, referenced from `tabula-rasa/SKILL.md`'s Known Limitations.
 
 ## [1.3.0] — 2026-08-21
 

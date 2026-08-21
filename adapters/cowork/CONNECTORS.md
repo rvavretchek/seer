@@ -53,6 +53,22 @@ Diferente do IBGE, o INPE **não tem** uma API REST/JSON simples equivalente à 
 
 **Decisão**: nenhum MCP server foi adicionado a `.mcp.json` para INPE. As APIs acima são públicas e sem chave, então skills de `geography/physical-geography` e `geography/gis` podem chamá-las diretamente via HTTP quando precisarem — mas isso é trabalho de documentação dentro dessas skills (procedimento com exemplos de query WFS/CQL), não um conector genérico de `.mcp.json`. Um wrapper MCP dedicado pro INPE (que traduza essas queries WFS pra ferramentas simples tipo `inpe_desmatamento(municipio, ano)`) é candidato razoável pra construir sob medida no futuro, mas não existe hoje de forma confiável.
 
+### SciELO: nenhum MCP server confiável encontrado — API oficial de metadados documentada em vez disso
+
+Pesquisa dedicada (21/ago/2026). Dois candidatos a MCP server foram examinados e nenhum passou no rigor aplicado ao IBGE:
+
+- **`leomcamilo/bx-scholar-mcp`** — único hit específico em busca de código no GitHub (`"scielo" "mcp-server"`). Mantenedor identificável (Leonardo Mello Camilo da Silva, `baxijen.com.br`), licença MIT, mas **não publicado em nenhum registro de pacotes** (nem npm nem PyPI — `pip install`/`npx` não funcionam, só clonar o monorepo e rodar via `uv`), **zero estrelas, zero forks**, criado em abril/2026 (~4 meses de idade, sem tração externa). Mais grave: inspecionado o código-fonte (`packages/bx-scholar-core/src/bx_scholar_core/clients/scielo.py`) — o "suporte a SciELO" **não é uma integração real com a API oficial da SciELO**. É a API da OpenAlex filtrada por publicador SciELO, com fallback pra fazer scraping de `search.scielo.org` (busca não-documentada, não uma API pública) quando a consulta à OpenAlex falha. Ou seja: nem resolve nem evita o tipo de fragilidade que já causou os 403 observados — só reduz a chance de precisar dela. Não publicado + zero tração + "integração" que na prática é outra coisa não passa no padrão de rigor (mesmo aplicado ao `mcp-brasil`, descartado por motivos parecidos).
+- Nenhum outro candidato específico de SciELO foi encontrado em npm, PyPI, GitHub code search, ou nos diretórios mcpservers.org / smithery.ai / mcp.so.
+
+**API oficial da SciELO, verificada ao vivo**: a rede SciELO mantém a **Article Meta API** (`https://articlemeta.scielo.org`, mantida pela própria SciELO em [`scieloorg/articles_meta`](https://github.com/scieloorg/articles_meta), licença BSD-2-Clause, push mais recente em 13/ago/2026 — ativa) e um provedor **OAI-PMH** ([`scieloorg/oai-pmh`](https://github.com/scieloorg/oai-pmh)) por cima dela. Testado nesta pesquisa:
+
+- `GET https://articlemeta.scielo.org/api/v1/collection/`, `/journal/`, `/article/identifiers/` e `/article/?collection=scl&code=...` — todos responderam **HTTP 200** com JSON real, sem chave nem cadastro.
+- Retorna **só metadados** (título, autores, resumo/abstract completo, DOI, datas, palavras-chave) — nunca o texto completo do artigo.
+- Formato legado, no estilo ISIS/CDS (tags tipo `v12`=título, `v83`=resumo, `v10`=autores) em vez de campos com nome — a própria SciELO publica a biblioteca Python `xylose` pra traduzir isso; não existe equivalente em JS/TS, e não existe wrapper MCP que já faça essa tradução.
+- **Isso explica, e resolve pra descoberta/metadados, o problema dos 403 observado no teste do Cowork**: testado diretamente nesta pesquisa, `https://www.scielo.br/j/rae/a/8gWWSDpsktKM4jHfDpKCGKp/` (página HTML do artigo) retorna **403** tanto com quanto sem User-Agent de navegador — é proteção de bot no site de leitura (`www.scielo.br`), não uma questão de chave/autenticação. Já `articlemeta.scielo.org` é uma API JSON separada, sem essa proteção, e respondeu 200 de forma consistente. **Mas isso não resolve a extração de texto completo**: o mesmo teste com `?format=pdf` na mesma URL também voltou 403 — a API de metadados não dá acesso ao PDF/texto integral, só ao resumo.
+
+**Decisão**: nenhum MCP server foi adicionado a `.mcp.json` para SciELO — nenhum candidato encontrado passa no padrão de rigor (mantenedor com histórico, pacote publicado, dependências limpas). A Article Meta API é real, pública, sem chave e ativa, mas retorna só metadados num formato legado que exige uma camada de tradução — documentá-la como chamada HTTP direta dentro de `core/literature-review` (pra descoberta/triagem de literatura em português, não pra leitura de texto completo) é trabalho razoável de skill, não de conector genérico. Um wrapper MCP dedicado (que traduza os campos `vNN` e talvez componha com OAI-PMH) seria um bom candidato pra construir sob medida no futuro — nenhum existe hoje.
+
 ## Candidatos (pesquisados, ainda não integrados)
 
 Verificar licença, manutenção e comando exato antes de adicionar a `.mcp.json` — mesmo rigor aplicado aos forks em `vendor/PROVENANCE.md`.
@@ -60,7 +76,7 @@ Verificar licença, manutenção e comando exato antes de adicionar a `.mcp.json
 | Conector | Por que importa pro Seer | Status da pesquisa |
 |---|---|---|
 | Zotero (gerenciamento de referências) | Citação/bibliografia — compõe com `core/citation-analysis` e `core/academic-writing` | Existência de skills/projetos de integração já mapeada em pesquisa anterior (`GPT_academic-skills.md`), mas nenhum MCP server específico verificado ainda |
-| SciELO (literatura acadêmica em português) | Cobre o viés de idioma que `core/literature-review` já documenta como limitação conhecida | Não pesquisado ainda (tarefa separada) |
+| SciELO (literatura acadêmica em português) | Cobre o viés de idioma que `core/literature-review` já documenta como limitação conhecida | Pesquisado (21/ago/2026) — ver seção acima. Nenhum MCP server confiável encontrado; Article Meta API oficial (metadados, sem chave) documentada pra uso direto em skills, sem wrapper MCP por enquanto. |
 | INPE (sensoriamento remoto/dados ambientais) | Fonte primária pra `geography/physical-geography` e `geography/gis` em contexto Brasil | Pesquisado (21/ago/2026) — ver seção acima. Nenhum MCP server confiável encontrado; API direta (WFS/CSV) documentada pra uso futuro em skills, sem wrapper MCP por enquanto. |
 
 ## Regra
@@ -124,6 +140,22 @@ Unlike IBGE, INPE does **not** have a simple REST/JSON API equivalent to `servic
 
 **Decision**: no MCP server was added to `.mcp.json` for INPE. The APIs above are public and keyless, so `geography/physical-geography` and `geography/gis` skills can call them directly over HTTP when they need to -- but that's documentation work inside those skills (a procedure with WFS/CQL query examples), not a generic `.mcp.json` connector. A dedicated INPE MCP wrapper (translating these WFS queries into simple tools like `inpe_deforestation(municipality, year)`) is a reasonable candidate to build later, but nothing trustworthy exists today.
 
+### SciELO: no trustworthy MCP server found -- SciELO's own metadata API documented instead
+
+Dedicated research (2026-08-21). Two MCP-server candidates were examined and neither cleared the bar applied to IBGE:
+
+- **`leomcamilo/bx-scholar-mcp`** -- the only SciELO-specific hit from a GitHub code search (`"scielo" "mcp-server"`). Identifiable maintainer (Leonardo Mello Camilo da Silva, `baxijen.com.br`), MIT license, but **not published to any package registry** (no npm, no PyPI -- `npx`/`pip install` don't work; it's clone-the-monorepo-and-run-via-`uv` only), **zero stars, zero forks**, created April 2026 (~4 months old, no external traction). More important: inspecting the actual source (`packages/bx-scholar-core/src/bx_scholar_core/clients/scielo.py`) shows its "SciELO support" **is not a real integration with SciELO's own API**. It's the OpenAlex API filtered to SciELO-published works, with a fallback that scrapes `search.scielo.org` (an undocumented search endpoint, not a public API) when the OpenAlex query fails. That doesn't fix or avoid the class of fragility that produced the 403s already observed -- it just reduces how often you'd hit it. Unpublished + zero traction + a "SciELO integration" that's actually something else fails the same bar `mcp-brasil` was rejected on.
+- No other SciELO-specific candidate turned up on npm, PyPI, GitHub code search, or the mcpservers.org / smithery.ai / mcp.so directories.
+
+**SciELO's own API, verified live**: the SciELO network runs the **Article Meta API** (`https://articlemeta.scielo.org`, maintained by SciELO itself at [`scieloorg/articles_meta`](https://github.com/scieloorg/articles_meta), BSD-2-Clause license, most recent push 2026-08-13 -- active) plus an **OAI-PMH** provider on top of it ([`scieloorg/oai-pmh`](https://github.com/scieloorg/oai-pmh)). Tested directly during this research:
+
+- `GET https://articlemeta.scielo.org/api/v1/collection/`, `/journal/`, `/article/identifiers/`, and `/article/?collection=scl&code=...` all returned **HTTP 200** with real JSON, no API key or registration.
+- Returns **metadata only** (title, authors, full abstract, DOI, dates, keywords) -- never the article's full text.
+- Legacy ISIS/CDS-style format (tags like `v12`=title, `v83`=abstract, `v10`=authors) rather than named fields -- SciELO itself publishes a Python library, `xylose`, to translate this; there's no JS/TS equivalent, and no MCP wrapper does this translation today.
+- **This explains, and fixes for discovery/metadata, the 403 problem observed in the Cowork test**: tested directly in this research, `https://www.scielo.br/j/rae/a/8gWWSDpsktKM4jHfDpKCGKp/` (the article's HTML reader page) returned **403 with and without a browser User-Agent** -- that's bot protection on the reader-facing site (`www.scielo.br`), not an auth/key issue. `articlemeta.scielo.org` is a separate JSON API without that protection, and answered 200 consistently. **But it does not solve full-text extraction**: the same URL with `?format=pdf` also came back 403 -- the metadata API gives you the abstract, not the PDF or full text.
+
+**Decision**: no MCP server was added to `.mcp.json` for SciELO -- no candidate found clears the bar (maintainer with a track record, published package, clean dependencies). The Article Meta API is real, public, keyless, and actively maintained, but returns metadata only in a legacy format that needs a translation layer -- documenting it as a direct HTTP call inside `core/literature-review` (for Portuguese-language literature discovery/triage, not full-text reading) is reasonable skill-level work, not a generic connector. A dedicated MCP wrapper (translating the `vNN` tag fields, possibly composing with OAI-PMH) would be a good candidate to build later -- nothing like that exists today.
+
 ## Candidates (researched, not yet integrated)
 
 Verify license, maintenance, and exact command before adding to `.mcp.json` -- the same rigor applied to forks in `vendor/PROVENANCE.md`.
@@ -131,7 +163,7 @@ Verify license, maintenance, and exact command before adding to `.mcp.json` -- t
 | Connector | Why it matters for Seer | Research status |
 |---|---|---|
 | Zotero (reference management) | Citation/bibliography -- composes with `core/citation-analysis` and `core/academic-writing` | Prior research (`GPT_academic-skills.md`) mapped integration skills/projects, but no specific MCP server verified yet |
-| SciELO (Portuguese-language academic literature) | Addresses the language-coverage bias `core/literature-review` already documents as a known limitation | Not researched yet (separate follow-up task) |
+| SciELO (Portuguese-language academic literature) | Addresses the language-coverage bias `core/literature-review` already documents as a known limitation | Researched (2026-08-21) -- see section above. No trustworthy MCP server found; SciELO's own Article Meta API (metadata, keyless) documented for skills to call directly, no MCP wrapper for now. |
 | INPE (remote sensing / environmental data) | Primary source for `geography/physical-geography` and `geography/gis` in a Brazil context | Researched (2026-08-21) -- see section above. No trustworthy MCP server found; direct API (WFS/CSV) documented for skills to use directly, no MCP wrapper for now. |
 
 ## Rule

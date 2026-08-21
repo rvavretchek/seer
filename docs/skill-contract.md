@@ -73,6 +73,7 @@ Uma skill pode consultar contexto declarado a nível de projeto de pesquisa, qua
 
 - **Onde procurar:** arquivo `metodologia.md` (ou equivalente) na raiz da pasta do projeto de pesquisa corrente — caminho configurável, nunca hardcoded a um nome único.
 - **O que ler:** qual metodologia foi adotada para este projeto (ex.: estudo de caso, análise de amostras, abordagem empírica) e sua bibliografia própria — não instruções novas de procedimento, só *qual* das opções já fundamentadas na skill se aplica aqui.
+- **Distinto da ata do Tabula Rasa** (`.tabula-rasa/memoria.md` / `seer_output/ata-do-projeto.md`, ver `skills/tabula-rasa/SKILL.md`): a ata é acompanhamento interno do processo da sala, não é lida por outras skills nem pensada pra virar texto publicado. `metodologia.md` é o oposto — escrito com a intenção de poder alimentar diretamente a seção de Metodologia da publicação final (tese, paper, livro), por isso os dois arquivos nunca se fundem.
 - **Se não existir:** a skill segue seu comportamento padrão, sem perguntar nem exigir. Ausência de contexto de projeto nunca bloqueia a skill.
 - **Se existir e conflitar** com o que a skill normalmente recomendaria: a skill sinaliza a tensão ao pesquisador em vez de decidir silenciosamente (Constituição, Princípio 6) — mesma regra que o orquestrador já aplica entre skills.
 
@@ -160,6 +161,7 @@ A skill may consult context declared at the research-project level, when it exis
 
 - **Where to look:** a `metodologia.md` file (or equivalent) at the root of the current research project's folder — configurable path, never hardcoded to one fixed name.
 - **What to read:** which methodology was adopted for this project (e.g. case study, sample analysis, empirical approach) and its own bibliography — not new procedural instructions, just *which* of the skill's already-grounded options applies here.
+- **Distinct from Tabula Rasa's ata** (`.tabula-rasa/memoria.md` / `seer_output/ata-do-projeto.md`, see `skills/tabula-rasa/SKILL.md`): the ata is internal tracking of the room's own process, never read by other skills and not meant to become published text. `metodologia.md` is the opposite -- written with the intent that it could feed directly into the final publication's own Methodology section (a thesis, paper, or book), which is why the two files are never merged.
 - **If it doesn't exist:** the skill falls back to its default behavior, without asking or requiring it. Absence of project context never blocks a skill.
 - **If it exists and conflicts** with what the skill would normally recommend: the skill flags the tension to the researcher instead of silently deciding (Constitution, Principle 6) — the same rule the orchestrator already applies across skills.
 

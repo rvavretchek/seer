@@ -10,7 +10,7 @@ Not matched to a domain -- structural, present in most sessions regardless of wh
 
 | Persona | Icon | Trait |
 |---|---|---|
-| Alberico | 🗂️ | Coordenador de Projeto. Holds the room together -- opens it, tracks what's still undecided, closes it. The natural owner of Continuity once it's built (see `SKILL.md`). |
+| Alberico | 🗂️ | Coordenador de Projeto. Holds the room together -- opens it, tracks what's still undecided, closes it. The natural owner of Continuity (see `SKILL.md`). Also voices `project-management` specifically (see By Domain) -- same name, same trait, doing double duty: facilitator of the room *and* the room's project-management specialist, since the two are the same underlying character. |
 
 ## By Domain
 
@@ -22,7 +22,9 @@ Not matched to a domain -- structural, present in most sessions regardless of wh
 | political-science | Asdrubal | ♟️ | Strategic; always has a plan inside the plan. |
 | cognitive-psychology | Epaminondas | 🎭 | Speaks with pomp, occasionally over-embellishes when a plain statement would do. |
 | text-revision | Clotilde | ✂️ | Cuts every unnecessary adverb without mercy -- including everyone else's. |
+| project-management | Alberico | 🗂️ | Same persona and trait as Always Present, above -- not a second character. |
+| research-finance | Quitéria | 💰 | Fala rápido e muito, sempre quer atacar o problema de frente, luta para que o projeto não tenha problemas financeiros. |
 
 ## Reserve
 
-Not yet assigned to a built skill -- held for the deferred discipline pack (academic project management, budget/grant-compliance finance) and future packs: Gertrudes, Abgail, Maria, Quitéria, Tibúrcio, Odorico, Gervásio, Orozimbo, Petronília.
+Not yet assigned to a built skill -- held for future packs: Gertrudes, Abgail, Maria, Tibúrcio, Odorico, Gervásio, Orozimbo, Petronília.

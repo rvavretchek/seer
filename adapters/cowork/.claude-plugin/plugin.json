@@ -2,7 +2,7 @@
   "name": "seer",
   "displayName": "Seer",
   "description": "Composable academic research skills -- literature review, source verification, discipline packs (Geography, Education, Sociology, Political Science, Cognitive Psychology), ABNT formatting, and Tabula Rasa (a visible, in-character round-table with cross-session memory) orchestrated for interdisciplinary research questions. Portable core, dual-licensed (MIT code / CC BY-SA 4.0 content).",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "author": {
     "name": "Seer contributors"
   },

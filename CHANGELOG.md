@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.3.0] — 2026-08-21
+
+Tabula Rasa ganha despacho paralelo real entre personas.
+
+### Adicionado
+
+- **`dispatch_mode: "subagent"`** no Tabula Rasa (padrão continua `"session"`, comportamento inalterado). Cada persona relevante vira um subagente `Task` de verdade — mesmo mecanismo que o orquestrador já roda em produção — em vez de uma mente só simulando todos os lados. A discordância entre personas em modo despachado é um sinal mais forte: são dois processos de raciocínio genuinamente separados chegando a conclusões diferentes, não uma mente narrando dois pontos de vista.
+- Validado ao vivo, duas vezes, de forma independente — a segunda rodada achou um limite real: uma skill de síntese (`regional-analysis`) despachada em paralelo não consegue de fato sintetizar as outras personas porque nunca vê os outputs delas. Documentado no procedimento como tradeoff real, não escondido.
+- Limitações conhecidas atualizadas: custo real de latência/token do modo despachado, e o fato de que subagentes despachados não recebem contexto da Continuity (`memoria.md`/`ata-do-projeto.md`) por padrão de projeto.
+
+### O que fica para depois
+
+- Paridade total com o `bmad-party-mode` (modos `auto`, `agent-team`) — segue adiada pra v2.0/v3.0.
+- Passar um resumo destilado da Continuity pro prompt de cada subagente despachado, se a lacuna atual (subagente não vê decisão já fechada) se mostrar um problema real na prática.
+
 ## [1.2.0] — 2026-08-21
 
 Fecha a prioridade "conectores" do roadmap pós-v1.1.0 e resolve o problema de granularidade de persona da Geografia.
@@ -97,6 +112,21 @@ Roteiro completo (`tests/manual/cowork-rc1-test-script.md`) rodado no Cowork rea
 ---
 
 # Changelog (English / en-US)
+
+## [1.3.0] — 2026-08-21
+
+Tabula Rasa gets real parallel dispatch between personas.
+
+### Added
+
+- **`dispatch_mode: "subagent"`** in Tabula Rasa (default stays `"session"`, unchanged behavior). Each relevant persona becomes a real `Task` subagent -- the same mechanism the orchestrator already runs in production -- instead of one mind simulating every side. Disagreement between personas in dispatched mode is a stronger signal: two genuinely separate reasoning processes reaching different conclusions, not one mind narrating two viewpoints.
+- Validated live, twice, independently -- the second pass surfaced a real limitation: a synthesis-type skill (`regional-analysis`) dispatched in parallel can't actually synthesize the other personas' outputs, since it never sees them. Documented in the procedure as a real tradeoff, not hidden.
+- Known Limitations updated: the real latency/cost of dispatched mode, and the fact that dispatched subagents don't receive Continuity context (`memoria.md`/`ata-do-projeto.md`) by design.
+
+### What's left for later
+
+- Full parity with `bmad-party-mode` (`auto`, `agent-team` modes) -- still deferred to v2.0/v3.0.
+- Passing a distilled Continuity brief into each dispatched subagent's prompt, if the current gap (a subagent not seeing an already-closed decision) proves to be a real problem in practice.
 
 ## [1.2.0] — 2026-08-21
 

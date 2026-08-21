@@ -58,6 +58,15 @@ provenance: "original | forked:<repo>@<commit>, adapted"
 - `provenance: forked:...` exige uma linha correspondente em `vendor/PROVENANCE.md` apontando para o commit de origem.
 - Skill sem `Limitações Conhecidas` não é aceita — ver Constituição, Princípio 6.
 
+## Variantes de idioma/localidade
+
+Quando uma skill depende de uma tradição estilística ou metodológica específica de idioma — o caso mais claro é revisão de texto (`text-revision`) — cada variante de idioma/localidade é uma skill irmã própria, nunca um único `SKILL.md` com lógica condicional por idioma escondida dentro.
+
+- **Nomenclatura:** `<slug-base>-<localidade>`, localidade em minúsculas, formato `idioma-REGIÃO` (ex.: `line-editing-en-us`, `line-editing-en-uk`, `line-editing-pt-br`, `line-editing-pt-pt`). Nunca usar só o código de idioma (`-en`, `-pt`) quando variantes regionais divergem o suficiente para importar — o `-us`/`-uk` ou `-br`/`-pt` é o que permite a comunidade contribuir novas variantes sem colisão de nome.
+- **Cada variante tem sua própria fundamentação real** (`evidence_sources`) — nunca a mesma fonte usada por outra variante só traduzida ou "adaptada de ouvido". Se a variante ainda não existe, a skill existente deve dizer isso explicitamente (não fingir cobertura que não tem) e apontar o nome esperado da irmã que falta, convidando a contribuição.
+- **`chains_well_with` deve listar as irmãs existentes**, mesmo que elas não componham operacionalmente entre si — é a forma de quem descobre uma variante achar as outras.
+- **Isso é distinto de uma norma regulatória específica de um país** (ex.: ABNT no Brasil) — uma norma regulatória não é uma "variante de idioma", é sua própria skill, nomeada pelo padrão que ela implementa, não por sufixo de localidade.
+
 ## Contexto de Projeto (opcional)
 
 Uma skill pode consultar contexto declarado a nível de projeto de pesquisa, quando existir. Isto não é memória — é leitura de um documento que o próprio projeto já mantém, editável pelo pesquisador ou pelas skills que o atualizam quando algo vira decisão.
@@ -135,6 +144,15 @@ provenance: "original | forked:<repo>@<commit>, adapted"
 - `chains_well_with` is not decorative — it's what the orchestrator uses to build plans. A skill with nothing listed here is, by default, suspect of being too isolated to be useful.
 - `provenance: forked:...` requires a matching row in `vendor/PROVENANCE.md` pointing to the source commit.
 - A skill without **Known Limitations** is not accepted — see Constitution, Principle 6.
+
+## Language/locale variants
+
+When a skill depends on a language- or locale-specific stylistic or methodological tradition — the clearest case is text revision (`text-revision`) — each language/locale variant is its own sibling skill, never a single `SKILL.md` with hidden per-language conditional logic inside.
+
+- **Naming:** `<base-slug>-<locale>`, locale lowercase, `language-REGION` format (e.g. `line-editing-en-us`, `line-editing-en-uk`, `line-editing-pt-br`, `line-editing-pt-pt`). Never use a bare language code (`-en`, `-pt`) when regional variants diverge enough to matter — the `-us`/`-uk` or `-br`/`-pt` suffix is what lets the community contribute new variants without name collisions.
+- **Each variant needs its own real grounding** (`evidence_sources`) — never the same source used by another variant, just translated or "adapted by ear." If a variant doesn't exist yet, the existing skill should say so explicitly (not pretend coverage it doesn't have) and name the expected sibling slug, inviting the contribution.
+- **`chains_well_with` should list existing siblings**, even when they don't operationally compose with each other — it's how someone who finds one variant finds the others.
+- **This is distinct from a country-specific regulatory standard** (e.g. ABNT in Brazil) — a regulatory standard isn't a "language variant," it's its own skill, named after the standard it implements, not tagged with a locale suffix.
 
 ## Project Context (optional)
 

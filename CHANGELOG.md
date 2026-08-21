@@ -1,5 +1,26 @@
 # Changelog
 
+## [1.0.0] — 2026-08-21
+
+Primeira versão final do Seer, cobrindo o MVP original (v1.0.0-rc.1) mais tudo que o roadmap já previa como "logo em seguida": a versão mínima do Tabula Rasa (party mode do próprio Seer) com memória entre sessões, seis skills novas de disciplina e a normalização ABNT.
+
+### Adicionado desde a v1.0.0-rc.1
+
+- **Tabula Rasa** (`skills/tabula-rasa/`) — sala visível onde as skills de disciplina discutem em personagem em vez de compor silenciosamente. Seis personas fechadas (`personas.md`): Alberico (Coordenador de Projeto, sempre presente), Ubaldo (Geografia), Serafim (Educação), Ludovico (Sociologia), Asdrubal (Ciência Política), Epaminondas (Psicologia Cognitiva), Clotilde (Revisão de Texto). Validado de ponta a ponta duas vezes (Provas de Conceito #1 e #2 no próprio `SKILL.md`), incluindo um pedido idêntico ao usado para validar o orquestrador, para comparação direta entre os dois modos de composição.
+- **Continuity** — memória entre sessões do Tabula Rasa, por projeto de pesquisa (não por sessão nem por dia): `.tabula-rasa/memoria.md` (log bruto, inclusive fios discutidos e ainda não decididos) e `seer_output/ata-do-projeto.md` (documento vivo de decisões fechadas). Validada com dois processos `claude -p` reais e separados contra o mesmo projeto — a sala retomou um fio em aberto em personagem, sem quebrar a quarta parede, na segunda sessão.
+- **Seis skills novas**: `sociology/sociological-analysis` (Durkheim/Weber), `political-science/policy-process-analysis` (Kingdon MSF + Sabatier ACF), `cognitive-psychology/cognitive-bias-analysis` (Tversky & Kahneman), `core/academic-formatting-abnt` (NBR 6023:2018, 10520:2023, 14724:2024), e a divisão de `text-revision/line-editing` em irmãs por idioma/localidade — `line-editing-en-us` (Williams & Bizup + Strunk & White) e `line-editing-pt-br` (Othon Garcia) — junto com uma convenção de nomenclatura documentada (`docs/skill-contract.md`) para a comunidade contribuir novas variantes (`en-uk`, `pt-pt`, etc.) sem colisão.
+- **23 → 30 skills** no plugin buildado (`adapters/cowork/skills/`) — essa também é a primeira versão em que o Tabula Rasa está de fato incluído no plugin (nunca tinha sido buildado antes).
+- **Conector OpenAlex confirmado funcionando de verdade**: causa raiz do 429 identificada (OpenAlex descontinuou o polite pool gratuito em fev/2026, chave grátis agora obrigatória), `.mcp.json` corrigido para usar `OPENALEX_API_KEY` via variável de ambiente, e testado com sucesso via `claude` CLI — busca real retornou dado real (OpenAlex Work ID e contagem de citações).
+
+### Limitação conhecida e importante: bug de plataforma no Cowork
+
+A instalação via **terminal** (`claude plugin marketplace add` + `claude plugin install`) funciona de forma confiável e é o caminho usado para validar tudo acima. A instalação pela **GUI do Cowork** (app desktop ou browser) tem um problema real e documentado do lado da Anthropic, não do Seer: marketplaces pessoais/via GitHub (como este) são aceitos na instalação mas removidos silenciosamente pelo `RemotePluginManager` no próximo ciclo de sincronização — tipicamente sobrevivendo à sessão em que foram instalados, mas não a um reinício do app. Depois disso, o app pode recusar reinstalar ("marketplace já adicionado") mesmo sem nenhuma skill disponível. Confirmado em issues públicas do `anthropics/claude-code`: [#39274](https://github.com/anthropics/claude-code/issues/39274), [#40475](https://github.com/anthropics/claude-code/issues/40475), [#40600](https://github.com/anthropics/claude-code/issues/40600). Sem correção conhecida até a data desta release. Se as skills do Seer pararem de responder no Cowork depois de ter funcionado antes, o caminho é remover e readicionar o marketplace — e, se isso também travar, usar a validação via terminal como alternativa enquanto a Anthropic não corrige.
+
+### O que fica para a próxima versão
+
+- As duas disciplinas mais difíceis do Tabula Rasa, deliberadamente adiadas por exigirem pesquisa real sem fork equivalente disponível: **Gerente de Projetos** (rigor metodológico/científico) e **Especialista em Finanças** (prestação de contas CAPES/CNPQ/FAPESP).
+- Conectores candidatos ainda não pesquisados: IBGE/SIDRA, Zotero, SciELO, INPE.
+
 ## [1.0.0-rc.1] — 2026-08-19
 
 Primeiro MVP completo do Seer, conforme escopo travado no [product brief](_bmad-output/planning-artifacts/briefs/brief-Seer-2026-08-18/brief.md). Release candidate — não a v1.0.0 final; falta a validação dentro do app Cowork de verdade (ver "O que falta" abaixo).
@@ -40,6 +61,27 @@ Roteiro completo (`tests/manual/cowork-rc1-test-script.md`) rodado no Cowork rea
 ---
 
 # Changelog (English / en-US)
+
+## [1.0.0] — 2026-08-21
+
+Seer's first final release, covering the original MVP (v1.0.0-rc.1) plus everything the roadmap already called "right after that": Seer's own minimal Tabula Rasa (party mode) with cross-session memory, six new discipline skills, and ABNT formatting.
+
+### Added since v1.0.0-rc.1
+
+- **Tabula Rasa** (`skills/tabula-rasa/`) -- a visible room where discipline skills argue in character instead of composing silently. Six personas locked (`personas.md`): Alberico (Project Coordinator, always present), Ubaldo (Geography), Serafim (Education), Ludovico (Sociology), Asdrubal (Political Science), Epaminondas (Cognitive Psychology), Clotilde (Text Revision). Validated end to end twice (Proof of Concept #1 and #2 in the `SKILL.md` itself), including an identical request to the one used to validate the orchestrator, for direct comparison between the two composition modes.
+- **Continuity** -- cross-session memory for Tabula Rasa, per research project (never per session or per day): `.tabula-rasa/memoria.md` (raw log, including threads discussed but not yet decided) and `seer_output/ata-do-projeto.md` (living decisions document). Validated with two real, separate `claude -p` processes against the same project -- the room picked up an open thread in character, without breaking the fourth wall, on the second session.
+- **Six new skills**: `sociology/sociological-analysis` (Durkheim/Weber), `political-science/policy-process-analysis` (Kingdon MSF + Sabatier ACF), `cognitive-psychology/cognitive-bias-analysis` (Tversky & Kahneman), `core/academic-formatting-abnt` (NBR 6023:2018, 10520:2023, 14724:2024), and `text-revision/line-editing` split into language/locale siblings -- `line-editing-en-us` (Williams & Bizup + Strunk & White) and `line-editing-pt-br` (Othon Garcia) -- with a documented naming convention (`docs/skill-contract.md`) so the community can contribute new variants (`en-uk`, `pt-pt`, etc.) without collisions.
+- **23 → 30 skills** in the built plugin (`adapters/cowork/skills/`) -- also the first version where Tabula Rasa is actually included in the plugin (it had never been built in before).
+- **OpenAlex connector confirmed genuinely working**: root cause of the 429 identified (OpenAlex discontinued the free polite pool in Feb 2026, a free key is now required), `.mcp.json` fixed to use `OPENALEX_API_KEY` via environment variable, and verified successfully via the `claude` CLI -- a real query returned real data (an OpenAlex Work ID and citation count).
+
+### Known limitation worth flagging: a Cowork platform bug
+
+Installing via **terminal** (`claude plugin marketplace add` + `claude plugin install`) works reliably and is the path used to validate everything above. Installing via the **Cowork GUI** (desktop app or browser) hits a real, documented bug on Anthropic's side, not Seer's: personal/GitHub-based marketplaces (like this one) install successfully but get silently removed by `RemotePluginManager` on the next sync cycle -- typically surviving the session they were installed in, but not an app restart. After that, the app may refuse to reinstall ("marketplace already added") even with no skill actually available. Confirmed against public issues on `anthropics/claude-code`: [#39274](https://github.com/anthropics/claude-code/issues/39274), [#40475](https://github.com/anthropics/claude-code/issues/40475), [#40600](https://github.com/anthropics/claude-code/issues/40600). No known fix as of this release. If Seer's skills stop responding in Cowork after previously working, remove and re-add the marketplace -- and if that also gets stuck, terminal-based validation remains a working alternative until Anthropic fixes this.
+
+### What's left for the next version
+
+- Tabula Rasa's two hardest disciplines, deliberately deferred since they need real research with no fork equivalent available: **Project Manager** (academic/scientific methodological rigor) and **Finance Specialist** (grant-compliance accounting for Brazilian funding agencies -- CAPES/CNPQ/FAPESP).
+- Candidate connectors not yet researched: IBGE/SIDRA, Zotero, SciELO, INPE.
 
 ## [1.0.0-rc.1] — 2026-08-19
 

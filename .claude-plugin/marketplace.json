@@ -4,12 +4,12 @@
     "name": "Seer contributors",
     "url": "https://github.com/rvavretchek/seer"
   },
-  "description": "Composable academic research skills for Claude Cowork and Claude Code -- literature review, source verification, and discipline packs (Geography, Education) orchestrated for interdisciplinary research questions.",
+  "description": "Composable academic research skills for Claude Cowork and Claude Code -- literature review, source verification, discipline packs (Geography, Education, Sociology, Political Science, Cognitive Psychology), ABNT formatting, and Tabula Rasa (a visible, in-character round-table with cross-session memory) orchestrated for interdisciplinary research questions.",
   "plugins": [
     {
       "name": "seer",
       "source": "./adapters/cowork",
-      "description": "Composable academic research skills -- literature review, source verification, and discipline packs (Geography, Education) orchestrated for interdisciplinary research questions.",
+      "description": "Composable academic research skills -- literature review, source verification, discipline packs (Geography, Education, Sociology, Political Science, Cognitive Psychology), ABNT formatting, and Tabula Rasa (a visible, in-character round-table with cross-session memory) orchestrated for interdisciplinary research questions.",
       "license": "MIT (code) / CC BY-SA 4.0 (skill content)"
     }
   ]

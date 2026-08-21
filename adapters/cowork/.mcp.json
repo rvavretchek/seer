@@ -12,6 +12,15 @@
       "type": "stdio",
       "command": "npx",
       "args": ["-y", "ibge-br-mcp"]
+    },
+    "zotero-mcp-server": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": ["zotero-mcp-server"],
+      "env": {
+        "ZOTERO_API_KEY": "${ZOTERO_API_KEY}",
+        "ZOTERO_LIBRARY_ID": "${ZOTERO_LIBRARY_ID}"
+      }
     }
   }
 }

@@ -2,7 +2,7 @@
 
 Plugin fino que empacota `skills/` (orquestrador + CORE + pacotes disciplinares) como um plugin do Claude Cowork. Cobre o fluxo de uso real de Sônia: 100% conversacional, sem terminal — o "cara da TI" instala o plugin uma vez, ela só conversa.
 
-**Status:** funcional, testado de ponta a ponta de verdade (não só validação de manifesto). `claude plugin marketplace add ./` + `claude plugin install seer@seer` funcionaram no repositório real: 23 skills carregadas, o conector OpenAlex reconhecido. Testado e desfeito (`marketplace remove`) — não deixamos o registro de teste no ambiente.
+**Status:** funcional, testado de ponta a ponta de verdade via `claude` CLI (não só validação de manifesto) — 32 skills carregadas, três conectores reconhecidos (OpenAlex, IBGE/SIDRA, Zotero). Também testado dentro do app Cowork real (v1.0.0), mas a instalação via GUI do Cowork hoje esbarra num bug de plataforma não resolvido do lado da Anthropic (ver `CHANGELOG.md`, v1.0.0) — a validação confiável, enquanto isso não é corrigido, é via terminal.
 
 ## Como funciona
 
@@ -34,7 +34,7 @@ Todos os comandos acima já rodaram de verdade nesta sessão — não é hipoté
 
 ## Conectores
 
-Ver [`CONNECTORS.md`](CONNECTORS.md) — apenas conectores reais e verificados entram em `.mcp.json` (mesmo rigor de `vendor/PROVENANCE.md`). Hoje: OpenAlex. Candidatos documentados: IBGE/SIDRA, Zotero, SciELO, INPE.
+Ver [`CONNECTORS.md`](CONNECTORS.md) — apenas conectores reais e verificados entram em `.mcp.json` (mesmo rigor de `vendor/PROVENANCE.md`). Hoje: **OpenAlex**, **IBGE/SIDRA**, **Zotero**. SciELO e INPE foram pesquisados mas não têm MCP server confiável — as APIs públicas deles ficam documentadas em `CONNECTORS.md` pra uso direto dentro das skills, sem conector genérico.
 
 ### Configurar a chave da OpenAlex (Windows)
 
@@ -45,15 +45,29 @@ Desde 13/fev/2026 a OpenAlex exige chave — sem ela, o limite é 100 créditos/
    ```powershell
    setx OPENALEX_API_KEY "sua-chave-aqui"
    ```
-3. **Feche e reabra o Claude Desktop/Cowork** — apps já abertos não pegam variável de ambiente nova até reiniciar.
+3. **Feche e reabra o Claude Desktop/Cowork de verdade** — feche pela bandeja do sistema, não só a janela; apps já abertos não pegam variável de ambiente nova até reiniciar.
 4. Reteste o Teste 3 do roteiro (`tests/manual/cowork-rc1-test-script.md`) — se a busca no OpenAlex retornar sem erro 429, a chave está funcionando.
 
 `adapters/cowork/.mcp.json` já referencia `${OPENALEX_API_KEY}` — a chave nunca fica no repositório, só na sua máquina.
 
+### Configurar o Zotero (Windows)
+
+O conector Zotero roda em modo **Web API** (não depende do app desktop do Zotero estar aberto) — é o único modo realista pro fluxo da Sonia.
+
+1. Gere uma chave em [zotero.org/settings/keys](https://www.zotero.org/settings/keys) e anote seu Library ID (aparece na mesma página).
+2. Defina as duas variáveis de ambiente de forma permanente:
+   ```powershell
+   setx ZOTERO_API_KEY "sua-chave-aqui"
+   setx ZOTERO_LIBRARY_ID "seu-library-id-aqui"
+   ```
+3. Feche e reabra o Cowork de verdade (mesma ressalva do OpenAlex acima).
+
+**Atenção, diferença de infraestrutura**: ao contrário do OpenAlex e do IBGE (pacotes npm, rodam via `npx`), o conector do Zotero é um pacote Python (PyPI), rodado via `uvx` — quem instala o plugin precisa ter [`uv`](https://docs.astral.sh/uv/) instalado na máquina da Sonia, além do Node.js já necessário pros outros dois.
+
 ## O que falta pra publicação real
 
-- Testar dentro do app Cowork de verdade (`Add marketplace` com `rvavretchek/seer`, ou upload do plugin como arquivo) — o que validamos até aqui foi via `claude` CLI, que usa o mesmo mecanismo, mas não é o app Cowork em si.
-- Pesquisar e verificar os conectores candidatos antes de adicioná-los.
+- Bug de plataforma no Cowork (`RemotePluginManager` removendo marketplace pessoal após restart) segue sem correção do lado da Anthropic — ver `CHANGELOG.md`, v1.0.0. Nada a fazer daqui além de monitorar e usar o terminal como validação enquanto isso.
+- Pesquisar Zotero em modo local (app desktop aberto) como alternativa/fallback ao modo Web API, se algum dia fizer sentido pro fluxo da Sonia.
 - Decidir se `adapters/cowork/skills/` fica commitado pra sempre (atual) ou se vale a pena, no futuro, um hook de CI que regenera e falha se estiver desatualizado.
 
 ---
@@ -62,7 +76,7 @@ Desde 13/fev/2026 a OpenAlex exige chave — sem ela, o limite é 100 créditos/
 
 Thin plugin that packages `skills/` (orchestrator + CORE + discipline packs) as a Claude Cowork plugin. Covers Sônia's real usage flow: fully conversational, no terminal — the "IT person" installs the plugin once, she just talks.
 
-**Status:** functional, tested end to end for real (not just manifest validation). `claude plugin marketplace add ./` + `claude plugin install seer@seer` worked against the real repository: 23 skills loaded, the OpenAlex connector recognized. Tested and torn down (`marketplace remove`) -- we didn't leave the test registration in the environment.
+**Status:** functional, tested end to end for real via the `claude` CLI (not just manifest validation) -- 32 skills loaded, three connectors recognized (OpenAlex, IBGE/SIDRA, Zotero). Also tested inside the real Cowork app (v1.0.0), but installing via the Cowork GUI currently hits an unresolved Anthropic-side platform bug (see `CHANGELOG.md`, v1.0.0) -- until that's fixed, terminal-based validation is the reliable path.
 
 ## How it works
 
@@ -94,7 +108,7 @@ Every command above actually ran in this session -- not hypothetical.
 
 ## Connectors
 
-See [`CONNECTORS.md`](CONNECTORS.md) -- only real, verified connectors go into `.mcp.json` (the same rigor as `vendor/PROVENANCE.md`). Today: OpenAlex. Documented candidates: IBGE/SIDRA, Zotero, SciELO, INPE.
+See [`CONNECTORS.md`](CONNECTORS.md) -- only real, verified connectors go into `.mcp.json` (the same rigor as `vendor/PROVENANCE.md`). Today: **OpenAlex**, **IBGE/SIDRA**, **Zotero**. SciELO and INPE were researched but have no trustworthy MCP server -- their public APIs are documented in `CONNECTORS.md` for direct use inside skills instead of a generic connector.
 
 ### Configuring the OpenAlex key (Windows)
 
@@ -105,13 +119,27 @@ Since 2026-02-13 OpenAlex requires a key -- without one, the limit is 100 credit
    ```powershell
    setx OPENALEX_API_KEY "your-key-here"
    ```
-3. **Close and reopen Claude Desktop/Cowork** -- apps already open don't pick up a new environment variable until restarted.
+3. **Close and reopen Claude Desktop/Cowork for real** -- quit from the system tray, not just the window; apps already open don't pick up a new environment variable until restarted.
 4. Re-run Test 3 from the script (`tests/manual/cowork-rc1-test-script.md`) -- if the OpenAlex search comes back without a 429, the key is working.
 
 `adapters/cowork/.mcp.json` already references `${OPENALEX_API_KEY}` -- the key never lives in the repository, only on your machine.
 
+### Configuring Zotero (Windows)
+
+The Zotero connector runs in **Web API mode** (doesn't depend on the Zotero desktop app being open) -- the only mode realistic for Sonia's actual workflow.
+
+1. Generate a key at [zotero.org/settings/keys](https://www.zotero.org/settings/keys) and note your Library ID (shown on the same page).
+2. Set both environment variables permanently:
+   ```powershell
+   setx ZOTERO_API_KEY "your-key-here"
+   setx ZOTERO_LIBRARY_ID "your-library-id-here"
+   ```
+3. Close and reopen Cowork for real (same caveat as OpenAlex above).
+
+**Infrastructure difference worth flagging**: unlike OpenAlex and IBGE (npm packages, run via `npx`), the Zotero connector is a Python package (PyPI), run via `uvx` -- whoever installs the plugin needs [`uv`](https://docs.astral.sh/uv/) on Sonia's machine, in addition to the Node.js already needed for the other two.
+
 ## What's left before real publication
 
-- Testing inside the actual Cowork app (`Add marketplace` with `rvavretchek/seer`, or uploading the plugin as a file) -- what we've verified so far is via the `claude` CLI, which uses the same mechanism, but isn't the Cowork app itself.
-- Researching and verifying the candidate connectors before adding them.
+- The Cowork platform bug (`RemotePluginManager` stripping personal marketplaces after a restart) is still unresolved on Anthropic's side -- see `CHANGELOG.md`, v1.0.0. Nothing to do here beyond monitoring it and using the terminal as validation in the meantime.
+- Research Zotero's local mode (desktop app open) as a fallback to Web API mode, if that ever becomes relevant to Sonia's workflow.
 - Deciding whether `adapters/cowork/skills/` stays committed forever (current) or eventually gets a CI check that regenerates and fails if it's stale.

@@ -8,6 +8,7 @@ Segue o padrão do plugin oficial `bio-research` em [`anthropics/knowledge-work-
 |---|---|---|---|---|
 | OpenAlex (busca acadêmica geral) | [`cyanheads/openalex-mcp-server`](https://github.com/cyanheads/openalex-mcp-server) | Apache-2.0 | **Obrigatória desde 13/fev/2026** (política da própria OpenAlex mudou — ver abaixo). Grátis. | ⚠️ Causa raiz identificada, correção aplicada em `.mcp.json`, pendente de teste com chave real. |
 | IBGE / SIDRA (dados geográficos, demográficos e estatísticos do Brasil) | [`SidneyBissoli/ibge-br-mcp`](https://github.com/SidneyBissoli/ibge-br-mcp) ([`ibge-br-mcp` no npm](https://www.npmjs.com/package/ibge-br-mcp)) | MIT | Nenhuma — consulta as APIs públicas do IBGE diretamente. | ✅ Verificado (ver seção abaixo), com confiança suficiente pra recomendar. **Ainda não está em `.mcp.json`** — a edição automática desse arquivo foi bloqueada nesta sessão (mudanças em `.mcp.json` exigem aprovação humana explícita); entrada pronta pra colar está documentada abaixo. |
+| Zotero (gerenciamento de referências) | [`54yyyu/zotero-mcp`](https://github.com/54yyyu/zotero-mcp) ([`zotero-mcp-server` no PyPI](https://pypi.org/project/zotero-mcp-server/)) | MIT | **Obrigatória** no modo recomendado (Web API) — grátis, gerada em `zotero.org/settings/security#applications`. | ✅ Verificado (ver seção abaixo), recomendado em modo Web API. **Ainda não está em `.mcp.json`** — mesma restrição de edição bloqueada nesta sessão; entrada pronta pra colar está documentada abaixo. |
 
 ### Causa raiz do 429 observado no teste da v1.0.0-rc.1
 
@@ -43,6 +44,36 @@ Existe também um projeto muito maior, `mcp-brasil` (~1.7k estrelas, 70 APIs pú
 }
 ```
 
+### Verificação do `zotero-mcp` (Zotero)
+
+Pesquisa dedicada (21/ago/2026). Zotero é popular o bastante pra ter vários candidatos — pelo menos oito repositórios distintos chamados `zotero-mcp`/`mcp-zotero` foram encontrados em npm, PyPI e GitHub. Comparados os principais:
+
+- **[`54yyyu/zotero-mcp`](https://github.com/54yyyu/zotero-mcp)** — de longe o mais maduro: **4,7 mil estrelas, 378 forks**, 530+ commits, release mais recente (`0.9.1`) em 06/ago/2026 (ativo). Mantenedor identificável no GitHub, licença MIT. **Publicado no PyPI** como `zotero-mcp-server` (`pip install`/`uvx` funcionam). Dependência central é `pyzotero` — o cliente Python de referência pra API do Zotero, mantido há anos por Stephan Hügel e citado pela própria documentação do Zotero — não scraping, não reimplementação por conta própria. Inspecionado o código-fonte (`src/zotero_mcp/client.py`): confirma chamadas HTTP reais à API local do Zotero em `localhost:23119` (a porta documentada oficialmente) e à API web via `pyzotero`; nenhuma chamada de telemetria ou a serviço terceiro não relacionado ao Zotero. Dependências adicionais (`markdownify`, `bibtexparser`, `fastmcp`, `httpx`, `pydantic`) são bibliotecas padrão, sem `postinstall` suspeito.
+- **[`kaliaboi/mcp-zotero`](https://github.com/kaliaboi/mcp-zotero)** (`mcp-zotero` no npm) — 164 estrelas, 22 commits. Só Web API (sem modo local). Real e funcional, mas muito menor em tração e superfície de ferramentas do que o `54yyyu/zotero-mcp`.
+- **[`kujenga/zotero-mcp`](https://github.com/kujenga/zotero-mcp)** — ~150 estrelas, Python. Candidato razoável, mas sem vantagem sobre o líder.
+- **[`masaki39/zotero-mcp`](https://github.com/masaki39/zotero-mcp)** (`masaki39-zotero-mcp` no PyPI) — só 3 estrelas, só modo local (API local do Zotero), sem modo Web API.
+- Demais candidatos (`cookjohn/zotero-mcp`, `stephenstubbs/zotero-mcp`, `Ayanya-0628/zotero-mcp`) têm tração muito menor e não foram aprofundados dado que `54yyyu/zotero-mcp` já cobre o mesmo escopo com muito mais maturidade.
+
+**A diferença arquitetural relevante pro Seer, que não existia nos três conectores anteriores**: a API local do Zotero (`localhost:23119`) só responde enquanto o **aplicativo desktop do Zotero está aberto** na máquina de quem pesquisa, e exige um passo manual único de configuração (Configurações → Avançado → "Allow other applications on this computer to communicate with Zotero"). Pra Sônia — pesquisadora não-técnica, sem garantia de que o Zotero desktop esteja aberto toda vez que ela conversa com o Cowork — depender só do modo local não é realista. O `54yyyu/zotero-mcp` resolve isso: suporta **modo Web API puro** (só `ZOTERO_API_KEY` + `ZOTERO_LIBRARY_ID`, gerados uma vez em `zotero.org/settings/security#applications`, funcionando na nuvem **independente do desktop estar aberto**), modo local puro, e um modo híbrido (leitura local rápida + escrita via web). Testado o README do projeto: em modo Web-API-only, funcionam busca, metadados, coleções, tags, notas, adicionar referência por DOI/URL/ISBN/BibTeX, atualizar item, criar coleção — o essencial pra compor com `core/citation-analysis` e `core/academic-writing`. O que **não** funciona sem o desktop aberto: extração/criação de anotações nativas de PDF (`zotero_create_annotation`, `zotero_get_page_layout`, `zotero_get_pdf_outline`) — funcionalidade de nicho (grifos/anotações dentro do PDF), não o caso de uso central de citação/bibliografia.
+
+**Decisão**: recomendar o modo **Web API** como padrão (não o local nem o híbrido), exatamente pelo motivo acima — é o único modo que funciona de forma confiável pro fluxo real da Sônia, sem depender de coincidência de apps abertos. Mesmo padrão de chave via variável de ambiente já usado pra `OPENALEX_API_KEY`.
+
+**Entrada pronta pra `.mcp.json`** (não aplicada automaticamente nesta sessão — mesma restrição de permissão que bloqueou o `ibge-br-mcp`):
+
+```json
+"zotero-mcp": {
+  "type": "stdio",
+  "command": "uvx",
+  "args": ["zotero-mcp-server"],
+  "env": {
+    "ZOTERO_API_KEY": "${ZOTERO_API_KEY}",
+    "ZOTERO_LIBRARY_ID": "${ZOTERO_LIBRARY_ID}"
+  }
+}
+```
+
+Nota de infraestrutura: diferente do OpenAlex e do IBGE (pacotes npm, rodam via `npx`, que já vem com o Node.js necessário pro resto do plugin), este é um pacote Python rodado via `uvx` (do `uv`) — uma ferramenta adicional que a pessoa que instala o plugin ("o cara da TI" mencionado no `README.md`) precisa ter instalada na máquina da Sônia, além do Node.js. Vale registrar isso no passo a passo de instalação quando este conector for de fato ativado. `ZOTERO_LIBRARY_ID` é o ID numérico de usuário (mesma página de `ZOTERO_API_KEY`); pra bibliotecas de grupo, adicionar também `"ZOTERO_LIBRARY_TYPE": "group"`.
+
 ### INPE: nenhum MCP server adicionado — API direta documentada em vez disso
 
 Diferente do IBGE, o INPE **não tem** uma API REST/JSON simples equivalente à `servicodados.ibge.gov.br`. Os dados de PRODES/DETER (desmatamento) e focos de queimada são expostos assim:
@@ -75,7 +106,6 @@ Verificar licença, manutenção e comando exato antes de adicionar a `.mcp.json
 
 | Conector | Por que importa pro Seer | Status da pesquisa |
 |---|---|---|
-| Zotero (gerenciamento de referências) | Citação/bibliografia — compõe com `core/citation-analysis` e `core/academic-writing` | Existência de skills/projetos de integração já mapeada em pesquisa anterior (`GPT_academic-skills.md`), mas nenhum MCP server específico verificado ainda |
 | SciELO (literatura acadêmica em português) | Cobre o viés de idioma que `core/literature-review` já documenta como limitação conhecida | Pesquisado (21/ago/2026) — ver seção acima. Nenhum MCP server confiável encontrado; Article Meta API oficial (metadados, sem chave) documentada pra uso direto em skills, sem wrapper MCP por enquanto. |
 | INPE (sensoriamento remoto/dados ambientais) | Fonte primária pra `geography/physical-geography` e `geography/gis` em contexto Brasil | Pesquisado (21/ago/2026) — ver seção acima. Nenhum MCP server confiável encontrado; API direta (WFS/CSV) documentada pra uso futuro em skills, sem wrapper MCP por enquanto. |
 
@@ -95,6 +125,7 @@ Follows the pattern set by the official `bio-research` plugin in [`anthropics/kn
 |---|---|---|---|---|
 | OpenAlex (general academic search) | [`cyanheads/openalex-mcp-server`](https://github.com/cyanheads/openalex-mcp-server) | Apache-2.0 | **Required as of 2026-02-13** (OpenAlex's own policy changed -- see below). Free. | ⚠️ Root cause identified, fix applied in `.mcp.json`, pending a test with a real key. |
 | IBGE / SIDRA (Brazilian geographic, demographic and statistical data) | [`SidneyBissoli/ibge-br-mcp`](https://github.com/SidneyBissoli/ibge-br-mcp) ([`ibge-br-mcp` on npm](https://www.npmjs.com/package/ibge-br-mcp)) | MIT | None -- queries IBGE's public APIs directly. | ✅ Verified (see section below), confident enough to recommend. **Not yet in `.mcp.json`** -- this session's automatic edit to that file was blocked (changes to `.mcp.json` require explicit human approval); a ready-to-paste entry is documented below. |
+| Zotero (reference management) | [`54yyyu/zotero-mcp`](https://github.com/54yyyu/zotero-mcp) ([`zotero-mcp-server` on PyPI](https://pypi.org/project/zotero-mcp-server/)) | MIT | **Required** in the recommended mode (Web API) -- free, generated at `zotero.org/settings/security#applications`. | ✅ Verified (see section below), recommended in Web API mode. **Not yet in `.mcp.json`** -- same edit block hit this session; a ready-to-paste entry is documented below. |
 
 ### Root cause of the 429 observed in the v1.0.0-rc.1 test
 
@@ -130,6 +161,36 @@ A much larger project, `mcp-brasil` (~1.7k stars, 70 Brazilian public APIs inclu
 }
 ```
 
+### Verification of `zotero-mcp` (Zotero)
+
+Dedicated research (2026-08-21). Zotero is popular enough to have several candidates -- at least eight distinct repositories named `zotero-mcp`/`mcp-zotero` turned up across npm, PyPI, and GitHub. Comparing the main ones:
+
+- **[`54yyyu/zotero-mcp`](https://github.com/54yyyu/zotero-mcp)** -- by far the most mature: **4.7k stars, 378 forks**, 530+ commits, most recent release (`0.9.1`) on 2026-08-06 (active). Identifiable GitHub maintainer, MIT license. **Published on PyPI** as `zotero-mcp-server` (`pip install`/`uvx` both work). Its core dependency is `pyzotero` -- the reference Python client for the Zotero API, maintained for years by Stephan Hügel and cited by Zotero's own documentation -- not scraping, not a from-scratch reimplementation. Inspected the source (`src/zotero_mcp/client.py`): confirms real HTTP calls to Zotero's local API at `localhost:23119` (the officially documented port) and to the web API via `pyzotero`; no telemetry or third-party calls unrelated to Zotero. The remaining dependencies (`markdownify`, `bibtexparser`, `fastmcp`, `httpx`, `pydantic`) are ordinary libraries, no suspicious `postinstall` script.
+- **[`kaliaboi/mcp-zotero`](https://github.com/kaliaboi/mcp-zotero)** (`mcp-zotero` on npm) -- 164 stars, 22 commits. Web API only (no local mode). Real and functional, but far smaller in traction and tool surface than `54yyyu/zotero-mcp`.
+- **[`kujenga/zotero-mcp`](https://github.com/kujenga/zotero-mcp)** -- ~150 stars, Python. A reasonable candidate, but no advantage over the leader.
+- **[`masaki39/zotero-mcp`](https://github.com/masaki39/zotero-mcp)** (`masaki39-zotero-mcp` on PyPI) -- only 3 stars, local-only (Zotero's local API), no Web API mode.
+- The remaining candidates (`cookjohn/zotero-mcp`, `stephenstubbs/zotero-mcp`, `Ayanya-0628/zotero-mcp`) have much lower traction and weren't investigated further, since `54yyyu/zotero-mcp` already covers the same scope with far more maturity.
+
+**The architectural wrinkle that matters for Seer, absent from the previous three connectors**: Zotero's local API (`localhost:23119`) only answers while the **Zotero desktop app is open** on the researcher's own machine, and needs a one-time manual setup step (Settings → Advanced → "Allow other applications on this computer to communicate with Zotero"). For Sonia -- a non-technical researcher with no guarantee the Zotero desktop app is open every time she talks to Cowork -- relying on local mode alone isn't realistic. `54yyyu/zotero-mcp` resolves this: it supports a **pure Web API mode** (just `ZOTERO_API_KEY` + `ZOTERO_LIBRARY_ID`, generated once at `zotero.org/settings/security#applications`, working from the cloud **regardless of whether the desktop app is open**), a pure local mode, and a hybrid mode (fast local reads + web writes). Checked against the project's README: in Web-API-only mode, search, metadata, collections, tags, notes, adding references by DOI/URL/ISBN/BibTeX, updating items, and creating collections all work -- the essentials for composing with `core/citation-analysis` and `core/academic-writing`. What does **not** work without the desktop app open: native PDF annotation extraction/creation (`zotero_create_annotation`, `zotero_get_page_layout`, `zotero_get_pdf_outline`) -- a niche capability (highlights/annotations inside the PDF itself), not the core citation/bibliography use case.
+
+**Decision**: recommend **Web API mode** as the default (not local, not hybrid), for exactly the reason above -- it's the only mode that works reliably for Sonia's actual workflow, without depending on whether an app happens to be open. Same API-key-via-environment-variable pattern already used for `OPENALEX_API_KEY`.
+
+**Ready-to-paste `.mcp.json` entry** (not applied automatically this session -- same permission block that stopped `ibge-br-mcp`):
+
+```json
+"zotero-mcp": {
+  "type": "stdio",
+  "command": "uvx",
+  "args": ["zotero-mcp-server"],
+  "env": {
+    "ZOTERO_API_KEY": "${ZOTERO_API_KEY}",
+    "ZOTERO_LIBRARY_ID": "${ZOTERO_LIBRARY_ID}"
+  }
+}
+```
+
+Infrastructure note: unlike OpenAlex and IBGE (npm packages, run via `npx`, which already ships with the Node.js the rest of the plugin needs), this is a Python package run via `uvx` (from `uv`) -- an additional tool the person installing the plugin (the "IT person" mentioned in `README.md`) needs on Sonia's machine, on top of Node.js. Worth calling out in the install walkthrough once this connector is actually turned on. `ZOTERO_LIBRARY_ID` is the numeric user ID (same settings page as `ZOTERO_API_KEY`); for group libraries, also add `"ZOTERO_LIBRARY_TYPE": "group"`.
+
 ### INPE: no MCP server added -- direct API documented instead
 
 Unlike IBGE, INPE does **not** have a simple REST/JSON API equivalent to `servicodados.ibge.gov.br`. PRODES/DETER deforestation data and fire-hotspot data are exposed like this instead:
@@ -162,7 +223,6 @@ Verify license, maintenance, and exact command before adding to `.mcp.json` -- t
 
 | Connector | Why it matters for Seer | Research status |
 |---|---|---|
-| Zotero (reference management) | Citation/bibliography -- composes with `core/citation-analysis` and `core/academic-writing` | Prior research (`GPT_academic-skills.md`) mapped integration skills/projects, but no specific MCP server verified yet |
 | SciELO (Portuguese-language academic literature) | Addresses the language-coverage bias `core/literature-review` already documents as a known limitation | Researched (2026-08-21) -- see section above. No trustworthy MCP server found; SciELO's own Article Meta API (metadata, keyless) documented for skills to call directly, no MCP wrapper for now. |
 | INPE (remote sensing / environmental data) | Primary source for `geography/physical-geography` and `geography/gis` in a Brazil context | Researched (2026-08-21) -- see section above. No trustworthy MCP server found; direct API (WFS/CSV) documented for skills to use directly, no MCP wrapper for now. |
 

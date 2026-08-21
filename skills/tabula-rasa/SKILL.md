@@ -1,7 +1,7 @@
 ---
 name: tabula-rasa
 description: Run a visible round-table where Seer's discipline skills speak in their own voice, to each other and to the researcher, instead of composing silently. Use when the researcher wants to see multiple disciplinary angles argue it out live -- not when a single skill or the silent orchestrator composition already answers the request.
-allowed-tools: Read, Glob, Write
+allowed-tools: Read, Glob, Write, Edit
 
 skill_id: "tabula-rasa/tabula-rasa"
 domain: "tabula-rasa"
@@ -25,7 +25,7 @@ output_schema:
       description: "The conversation as it happened -- personas speaking to the researcher and to each other, not a report with a section per discipline."
     - field: "open_threads"
       type: "array"
-      description: "What was discussed but not yet decided by the end of the session -- the seam Continuity writes through once built (see Known Limitations)."
+      description: "What was discussed but not yet decided by the end of the session -- what Continuity (see Procedure) writes into `memoria.md` when `project_path` is given."
 chains_well_with: []
 license: "CC BY-SA 4.0"
 provenance: "original, inspired by: BMAD Method party-mode skill (MIT, BMad Code LLC 2025) -- pattern only, see evidence_sources."
@@ -51,17 +51,32 @@ The party-mode pattern this generalizes is itself built on a simple claim: forci
 
 `Glob` for `skills/**/SKILL.md`, `Read` each match's frontmatter (`name`, `domain`, `description`, `chains_well_with`) -- same discovery the orchestrator already uses, excluding this file and the orchestrator itself. Match discovered skills against the `research_request` the same way the orchestrator's Step 3 does. Then `Read` `personas.md` to find each matched domain's voice; a matched skill with no entry there still joins the room, speaking under its own skill title rather than a named persona, until `personas.md` grows to cover it. The room's **Always Present** persona (`personas.md`) joins regardless of what the discovery step matched -- not tied to any domain, present in most sessions by design.
 
+If `project_path` was given, do the Continuity reads (see below) alongside this step, before the room opens.
+
 ### 2. Voice Each Persona
 
 Session mode: one mind behind every voice, each persona distinct in how it reasons and what it emphasizes, not just in name. Disagreement between disciplines is not resolved on the room's behalf -- when two personas' readings of the same evidence genuinely conflict, both stand, named, rather than one quietly winning. Personality, humor, and light rivalry between personas are welcome in the room precisely because they help the researcher track *who* holds *which* position -- but nothing about tone changes what a persona actually claims, and the finished, citable output (see Continuity) is never sourced from banter, only from what a persona substantively argued.
 
 ### 3. Continuity
 
-Not implemented in this version -- documented here as the seam the next increment attaches to, so this version doesn't have to be reshaped to fit it later. When built: a single per-project ata (append-only, growing across every Tabula Rasa session for that `project_path`, mirroring the pattern this skill's own planning sessions were run under) captures what was discussed and decided, and -- more importantly -- what was discussed but left undecided, read back in distilled form at the start of the next session. Decisions and adopted methodology that graduate out of the ata belong in the project's own editable documentation (see `docs/skill-contract.md`, Project Context), never left to live only in the ata. Both artifacts live entirely inside `project_path`, self-contained -- no dependency on this repository's own `_bmad/` tooling, which does not ship with the plugin.
+Skipped entirely when `project_path` is absent, per `input_schema` -- the session runs single-shot with no read or write below. When present, two artifacts, both single-file-per-project (never split by day or session) and both located relative to `project_path`, self-contained -- no dependency on this repository's own `_bmad/` tooling, which does not ship with the plugin:
+
+- **`{project_path}/.tabula-rasa/memoria.md`** -- hidden. The raw discussion log: what was discussed, and especially what was discussed but not yet decided (open threads). Grows across every Tabula Rasa session for the project. Internal/working file, not meant for the researcher to read directly, though nothing prevents it.
+- **`{project_path}/seer_output/ata-do-projeto.md`** -- visible, under `seer_output/` (mirrors this repo's own `_bmad-output/` convention, one layer up, for the same kind of tool-owned-but-legible output). The decisions record: what got closed, adopted methodology, resolved threads -- a living document for the *project*, reorganized as decisions evolve, not append-only the way `memoria.md` is.
+
+**Read (part of Discover the Room, above).** `Read` each file independently, only if it exists; neither existing is not an error, the session simply opens cold on that front. `ata-do-projeto.md`'s content shapes how the room opens -- a decision already closed there is not relitigated as if it were new. `memoria.md`'s open threads are raised by Alberico (**Always Present**, `personas.md`) organically, near the start, worked into how he opens the room in character -- never a recited log dump, never "I loaded a file" breaking the fourth wall (same discipline as `.claude/skills/bmad-party-mode/references/party-memory.md`'s "read it on entry -- distill, don't dump," adapted here in philosophy only: that reference hands the raw log to a separate reader subagent for distillation, which this skill cannot spawn -- Alberico reads the file himself and carries only what's worth raising into how he opens).
+
+**Write, `ata-do-projeto.md` -- during the session, as decisions close.** The moment something genuinely becomes a closed decision -- resolved thread, adopted methodology, a position the room settled on -- write it then, not held for Wrapping Up; the session could end abruptly before wrap-up is reached. Use `Edit` on the specific existing section a decision updates or supersedes (this is a living document); `Write` a new section only for a decision with no existing home. Constitution Principle 6 applies here exactly as `docs/skill-contract.md`'s Project Context section already applies it to `metodologia.md`: if `ata-do-projeto.md`'s existing content conflicts with what a discipline skill in the room would normally argue, the room flags the tension to the researcher rather than silently overriding either the skill's default or the ata's prior decision.
+
+**Write, `memoria.md` -- once, at Wrapping Up.** Unlike the ata, this is reasonably composed a single time, at Wrapping Up (below) -- its session block is a summary of the whole session's open threads as they stand at the end, so composing it earlier would mean redoing it. `Read` the existing file if present, then `Write` the full file back with the new session's block appended at the end under a dated heading (e.g. `## Sessão {date}`) -- prior content is never overwritten or discarded, only added to. If the file doesn't exist yet, this `Write` creates it under `.tabula-rasa/`.
+
+Both writes are silent -- the room never says "noting this" or "I'll remember this," same discipline as the `party-memory.md` reference above.
+
+**Relationship to `metodologia.md` is deliberately unresolved.** `metodologia.md` (`docs/skill-contract.md`, Project Context) is narrower -- which methodology was adopted -- and read by any skill in Seer, not just this one. `ata-do-projeto.md` is broader -- any project decision -- and is Tabula-Rasa-specific. This version does not merge them, cross-reference them, or make one a subset of the other; a future increment may need to reconcile the two, but that is an open question, not something decided here.
 
 ### 4. Wrapping Up
 
-When the researcher signals the session is done, the **Always Present** persona reads back the open threads plainly -- what got settled, what didn't -- and the room returns to normal skill behavior. No transcript of the room's banter is ever the deliverable; if the researcher wants a written output from the discussion, that gets composed the same way any skill's `output_schema` would, sourced from what was substantively argued.
+When the researcher signals the session is done, the **Always Present** persona reads back the open threads plainly -- what got settled, what didn't -- and the room returns to normal skill behavior. This is also when `memoria.md`'s session block gets written, if Continuity is active (see above) -- the same open threads just read back, composed into the dated entry. No transcript of the room's banter is ever the deliverable; if the researcher wants a written output from the discussion, that gets composed the same way any skill's `output_schema` would, sourced from what was substantively argued.
 
 ## Example
 
@@ -83,7 +98,8 @@ Discovery matched `geography/human-geography`, `geography/economic-geography`, a
 
 ## Known Limitations
 
-- **No continuity between sessions in this version.** Every session starts cold; open threads from a prior session are not recovered. See Continuity above for the deferred design.
+- **Continuity artifacts have no distillation mechanism.** Unlike the `party-memory.md` reference pattern this adapts, where a separate reader subagent condenses the log before it enters the room, this skill cannot spawn a separate reader -- the model reads `memoria.md` and `ata-do-projeto.md` directly, in full, every session. Over many sessions on the same project both files grow and nothing here caps or condenses them; a future increment may need a distillation step once this is a real problem, not a speculative one.
+- **`ata-do-projeto.md` and `metodologia.md` are two distinct, currently-unmerged artifacts** (see Continuity above). The former is Tabula-Rasa-specific and covers any project decision; the latter is skill-agnostic and covers only adopted methodology. Reconciling or cross-referencing them is an open question this version deliberately leaves open.
 - **Session mode only.** One mind voices every persona; there is no real parallel dispatch the way the orchestrator's subagents run independently. A future increment may add a dispatched mode for cases where independent reasoning per persona actually changes the outcome.
 - **`personas.md` coverage lags the skill roster.** A newly contributed discipline skill joins the room under its own title, not a named persona, until `personas.md` is updated -- this is a deliberate default, not a bug to route around.
 - **Persona granularity is per-domain, not per-skill** (see Proof of Concept #1). Two skills from the same domain are voiced by the same persona today; this is untested for the case where they'd genuinely disagree with each other rather than agreeing in spirit.

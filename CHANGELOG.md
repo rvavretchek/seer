@@ -1,5 +1,23 @@
 # Changelog
 
+## [1.2.0] — 2026-08-21
+
+Fecha a prioridade "conectores" do roadmap pós-v1.1.0 e resolve o problema de granularidade de persona da Geografia.
+
+### Adicionado
+
+- **Conector IBGE/SIDRA** (`ibge-br-mcp`) — dados geográficos, demográficos e estatísticos do Brasil, sem chave de API. Mantenedor identificável, dependências enxutas, verificado de forma independente antes de entrar em `.mcp.json`.
+- **Conector Zotero** (`zotero-mcp-server`), em modo Web API — gerenciamento de referências, funciona sem o app desktop do Zotero aberto (único modo realista pro fluxo da Sonia). Único conector do plugin que roda em Python/`uvx` em vez de Node/`npx` — documentado no `README.md` do adaptador.
+- **INPE e SciELO documentados dentro das próprias skills** (não só no `CONNECTORS.md`): `geography/physical-geography` e `geography/gis` sabem consultar a API WFS/CQL do TerraBrasilis (PRODES/DETER) direto via HTTP; `core/literature-review` ganhou um passo de procedimento novo pra API de metadados da SciELO, deixando explícito que é só metadado, nunca texto completo.
+- **Geografia quebrada em oito personas** — nova camada `By Skill` em `personas.md` (prioridade sobre `By Domain`), reservada pra domínios que realmente precisam, não um padrão novo geral. Ubaldo continua em `geographic-research`; Prudêncio, Cremilda, Bonifácio, Maria, Odorico, Catarina e Altamira assumem as outras oito skills de Geografia.
+- **Relação entre `ata-do-projeto.md` e `metodologia.md` resolvida**: ficam separados de propósito — a ata é acompanhamento interno da sala, `metodologia.md` é candidato a virar parte da publicação final.
+
+### O que fica para depois
+
+- Despacho paralelo real entre personas do Tabula Rasa (próxima MINOR).
+- Paridade total com o `bmad-party-mode` — adiada pra v2.0/v3.0.
+- Zotero em modo local (app desktop aberto), como alternativa ao modo Web API.
+
 ## [1.1.0] — 2026-08-21
 
 Fecha o roadmap pós-MVP planejado desde a v1.0.0-rc.1: as duas disciplinas do Tabula Rasa que exigiam pesquisa real, sem fork equivalente, agora estão prontas. O elenco de personas do Tabula Rasa está completo conforme desenhado.
@@ -79,6 +97,24 @@ Roteiro completo (`tests/manual/cowork-rc1-test-script.md`) rodado no Cowork rea
 ---
 
 # Changelog (English / en-US)
+
+## [1.2.0] — 2026-08-21
+
+Closes the "connectors" priority from the post-v1.1.0 roadmap and resolves Geography's persona-granularity problem.
+
+### Added
+
+- **IBGE/SIDRA connector** (`ibge-br-mcp`) -- Brazilian geographic, demographic, and statistical data, no API key. Identifiable maintainer, lean dependencies, verified independently before landing in `.mcp.json`.
+- **Zotero connector** (`zotero-mcp-server`), in Web API mode -- reference management, works without the Zotero desktop app open (the only mode realistic for Sonia's workflow). The only plugin connector running on Python/`uvx` instead of Node/`npx` -- documented in the adapter's `README.md`.
+- **INPE and SciELO documented inside the relevant skills themselves** (not just `CONNECTORS.md`): `geography/physical-geography` and `geography/gis` now know how to query TerraBrasilis's WFS/CQL API (PRODES/DETER) directly over HTTP; `core/literature-review` gained a new procedure step for SciELO's metadata API, stating plainly that it's metadata only, never full text.
+- **Geography split into eight personas** -- a new `By Skill` tier in `personas.md` (overrides `By Domain`), reserved for domains that actually need it, not a new general default. Ubaldo keeps `geographic-research`; Prudêncio, Cremilda, Bonifácio, Maria, Odorico, Catarina, and Altamira take the other eight Geography skills.
+- **`ata-do-projeto.md` vs. `metodologia.md` relationship resolved**: kept separate by design -- the ata is internal room tracking, `metodologia.md` is written to potentially feed the final publication.
+
+### What's left for later
+
+- Real parallel dispatch between Tabula Rasa personas (next MINOR).
+- Full parity with `bmad-party-mode` -- deferred to v2.0/v3.0.
+- Zotero local mode (desktop app open), as an alternative to Web API mode.
 
 ## [1.1.0] — 2026-08-21
 
